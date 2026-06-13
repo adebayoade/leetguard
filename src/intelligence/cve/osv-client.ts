@@ -26,7 +26,8 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
     const cachedFindings = getCache<Finding[]>(cacheKey);
 
     if (cachedFindings !== null) {
-      findings.push(...cachedFindings);
+      const findingsWithTrace = cachedFindings.map((f) => ({ ...f, trace: pkg.trace }));
+      findings.push(...findingsWithTrace);
     } else {
       uncachedDeps.push(pkg);
     }
@@ -97,9 +98,12 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
           });
         }
 
-        // Cache the findings (even if empty) for 12 hours
+        // Cache the generic findings WITHOUT the project-specific trace
         setCache(cacheKey, packageFindings, 12);
-        findings.push(...packageFindings);
+        
+        // Add the trace for the current run
+        const findingsWithTrace = packageFindings.map((f) => ({ ...f, trace: pkg.trace }));
+        findings.push(...findingsWithTrace);
       });
     } catch (error) {
       console.error(`Failed to query OSV API (Chunk ${i}):`, error);

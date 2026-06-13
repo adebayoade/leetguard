@@ -21,6 +21,9 @@ export function generateTextReport(report: SecurityReport): void {
       const color = f.severity === 'High' ? chalk.red : chalk.yellow;
       console.log(color(`- [${f.severity}] ${f.category} (${f.patternName})`));
       console.log(`  Description: ${f.description}`);
+      if (f.trace && f.trace.length > 0) {
+        console.log(`  Trace: root -> ${f.trace.join(' -> ')}`);
+      }
       console.log(chalk.cyan(`  ISO 27001 Mapping: ${f.isoControl}\n`));
     });
   } else {

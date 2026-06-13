@@ -5,6 +5,7 @@ export interface PackageDependency {
   integrity?: string;
   dev?: boolean;
   dependencies?: Record<string, string>;
+  trace?: string[];
 }
 
 export interface LockfileData {
@@ -12,6 +13,7 @@ export interface LockfileData {
   version: string;
   lockfileVersion: number;
   dependencies: Map<string, PackageDependency>;
+  rootDependencies?: Record<string, string>;
 }
 
 export type AntiPatternCategory =
@@ -28,6 +30,7 @@ export interface Finding {
   description: string;
   isoControl: string;
   location?: string;
+  trace?: string[];
 }
 
 export interface SecurityReport {

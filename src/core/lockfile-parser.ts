@@ -35,6 +35,8 @@ function parseNpmLock(filePath: string): LockfileData {
 
   // Support npm v2 and v3 lockfiles
   const packages = json.packages || json.dependencies || {};
+  const rootPackage = packages[''] || {};
+  const rootDependencies = rootPackage.dependencies || {};
 
   for (const [key, pkg] of Object.entries<any>(packages)) {
     // In package-lock v2/v3, the root project is ""
@@ -43,7 +45,7 @@ function parseNpmLock(filePath: string): LockfileData {
     // Extract real package name from paths like "node_modules/chalk"
     const name = key.replace(/^.*node_modules\//, '');
 
-    dependencies.set(name, {
+    dependencies.set(key, {
       name,
       version: pkg.version,
       resolved: pkg.resolved,
@@ -58,5 +60,6 @@ function parseNpmLock(filePath: string): LockfileData {
     version: json.version,
     lockfileVersion: json.lockfileVersion,
     dependencies,
+    rootDependencies,
   };
 }
