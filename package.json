@@ -1,0 +1,47 @@
+{
+  "name": "leetguard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "leetguard": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "postbuild": "chmod +x dist/index.js",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "security",
+    "scanner",
+    "vulnerability",
+    "cve",
+    "osv",
+    "ISO 27001",
+    "abandoned-packages",
+    "ast-parser",
+    "leetguard"
+  ],
+  "author": "Adebayo Aderibigbe",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/parser": "^7.29.7",
+    "@babel/traverse": "^7.29.7",
+    "@inquirer/prompts": "^8.5.2",
+    "chalk": "^5.6.2",
+    "commander": "^15.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.28.0",
+    "@types/node": "^25.9.3",
+    "prettier": "^3.8.4",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  }
+}
