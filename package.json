@@ -1,9 +1,12 @@
 {
   "name": "leetguard",
   "version": "1.0.0",
-  "description": "",
+  "description": "LeetGuard - Security Anti-Pattern Scanner for Node.js projects",
   "main": "dist/index.js",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "leetguard": "./dist/index.js"
   },
