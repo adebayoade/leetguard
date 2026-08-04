@@ -1,6 +1,8 @@
 import { Finding } from '../../types/index.js';
+import { getIsoControl } from '../iso-mapper.js';
 import { getCache, setCache } from '../../core/cache.js';
 import chalk from 'chalk';
+import { logger } from '../../core/logger.js';
 
 const NPM_REGISTRY_URL = 'https://registry.npmjs.org';
 const ABANDONED_THRESHOLD_MONTHS = 24;
@@ -29,14 +31,14 @@ export async function checkAbandonedPackages(directDependencies: string[]): Prom
 
   const cachedCount = directDependencies.length - uncachedPackages.length;
   if (uncachedPackages.length === 0) {
-    console.log(
+    logger.log(
       chalk.blue(
         `[LeetGuard] NPM Registry: Checked ${directDependencies.length} direct dependencies (all loaded from cache)`,
       ),
     );
     return findings;
   } else {
-    console.log(
+    logger.log(
       chalk.blue(
         `[LeetGuard] NPM Registry: Checking ${uncachedPackages.length} packages for abandonment (${cachedCount} loaded from cache)...`,
       ),
@@ -76,7 +78,7 @@ export async function checkAbandonedPackages(directDependencies: string[]): Prom
                 patternName: 'Abandoned Package',
                 severity: 'Medium',
                 description: `[${pkgName}] Package has not been updated in ${monthsDiff} months.`,
-                isoControl: 'A.14.2.7', // Outsourced development
+                isoControl: getIsoControl('Abandoned Package'), // Outsourced development
               });
             }
           }

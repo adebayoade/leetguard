@@ -1,7 +1,9 @@
 import { Finding, PackageDependency } from '../../types/index.js';
+import { CVE_ISO_CONTROL } from '../iso-mapper.js';
 
 import { getCache, setCache } from '../../core/cache.js';
 import chalk from 'chalk';
+import { logger } from '../../core/logger.js';
 
 const OSV_BATCH_URL = 'https://api.osv.dev/v1/querybatch';
 
@@ -35,14 +37,14 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
 
   const cachedCount = dependencies.length - uncachedDeps.length;
   if (uncachedDeps.length === 0) {
-    console.log(
+    logger.log(
       chalk.blue(
         `[LeetGuard] OSV API: Checked ${dependencies.length} dependencies (all loaded from cache)`,
       ),
     );
     return findings; // All dependencies were served from cache
   } else {
-    console.log(
+    logger.log(
       chalk.blue(
         `[LeetGuard] OSV API: Querying ${uncachedDeps.length} dependencies from network (${cachedCount} loaded from cache)...`,
       ),
@@ -93,14 +95,14 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
               patternName: vuln.id,
               severity: 'High',
               description: `[${pkg.name}@${pkg.version}] ${vuln.summary || vuln.details || 'Known Vulnerability'}`,
-              isoControl: 'A.14.2.8',
+              isoControl: CVE_ISO_CONTROL,
             });
           });
         }
 
         // Cache the generic findings WITHOUT the project-specific trace
         setCache(cacheKey, packageFindings, 12);
-        
+
         // Add the trace for the current run
         const findingsWithTrace = packageFindings.map((f) => ({ ...f, trace: pkg.trace }));
         findings.push(...findingsWithTrace);

@@ -9,10 +9,13 @@ import { dirname } from 'path';
 import { parseLockfile } from './core/lockfile-parser.js';
 import { resolveTree } from './core/tree-resolver.js';
 import { generateTextReport } from './reporting/formats/text.js';
+import { generateJsonReport } from './reporting/formats/json.js';
+import { generateAuditReport } from './reporting/formats/audit.js';
 import { lookupCveBatch } from './intelligence/cve/osv-client.js';
 import { checkAbandonedPackages } from './intelligence/abandonment/npm-registry.js';
 import { scanSourceCode } from './intelligence/scanner/ast-scanner.js';
 import { select } from '@inquirer/prompts';
+import { logger } from './core/logger.js';
 
 // Workaround for __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -49,7 +52,7 @@ program
       });
     }
 
-    console.log(chalk.blue(`[LeetGuard] Scanning directory: ${dir}...`));
+    logger.log(chalk.bold(`LeetGuard v${pkg.version}  |  Scanning project...`));
 
     // Layer 2: Core Engine
     const lockfile = parseLockfile(dir);
@@ -77,14 +80,19 @@ program
     }
     const abandonedPackages = await checkAbandonedPackages(directDeps);
 
-    console.log(chalk.blue(`[LeetGuard] Scanning source code for anti-patterns...`));
+    logger.log(chalk.blue(`[LeetGuard] Scanning source code for anti-patterns...`));
     const codeAntiPatterns = scanSourceCode(dir);
 
     // Layer 4: Reporting
+    const directCount = directDeps.length;
+    const transitiveCount = dependencies.length > directCount ? dependencies.length - directCount : 0;
+
     const report = {
       timestamp: new Date().toISOString(),
       scannedDirectory: dir,
       totalDependencies: dependencies.length,
+      directDependenciesCount: directCount,
+      transitiveDependenciesCount: transitiveCount,
       vulnerabilities,
       abandonedPackages,
       codeAntiPatterns,
@@ -92,8 +100,12 @@ program
 
     if (format === 'text') {
       generateTextReport(report);
+    } else if (format === 'json') {
+      generateJsonReport(report);
+    } else if (format === 'audit') {
+      generateAuditReport(report);
     } else {
-      console.log(
+      logger.log(
         chalk.yellow(
           `[LeetGuard] ${format.toUpperCase()} format generation is not fully implemented in this MVP. Showing text fallback:`,
         ),

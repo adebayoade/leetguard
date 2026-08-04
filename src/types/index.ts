@@ -37,6 +37,8 @@ export interface SecurityReport {
   timestamp: string;
   scannedDirectory: string;
   totalDependencies: number;
+  directDependenciesCount: number;
+  transitiveDependenciesCount: number;
   vulnerabilities: Finding[];
   abandonedPackages: Finding[];
   codeAntiPatterns: Finding[];

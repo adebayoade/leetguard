@@ -1,6 +1,6 @@
 # LeetGuard
 
-LeetGuard is a lightning-fast, open-source CLI tool designed to parse package manager lockfiles and identify security anti-patterns across a project's dependency tree and source code. Built with modern Node.js environments in mind, it maps findings directly to **ISO 27001 Annex A** controls, giving you immediate compliance and security insights without the noise of bloated commercial scanners.
+LeetGuard is a lightning-fast, open-source CLI tool designed to parse package manager lockfiles and identify security anti-patterns across a project's dependency tree and source code. Built with modern Node.js environments in mind, it maps findings directly to **ISO 27001:2022 Annex A** controls, giving you immediate compliance and security insights without the noise of bloated commercial scanners.
 
 ## 🚀 Key Features
 
@@ -31,7 +31,7 @@ To dramatically speed up scans and prevent IP rate-limiting:
 
 ### 5. Compliance Mapping
 
-Every single finding—from an abandoned npm package to an `eval()` call in your source code—is automatically mapped to a specific ISO 27001 control (e.g., _A.14.2.8 Secure System Engineering_, _A.14.2.7 Outsourced Development_).
+Every single finding—from an abandoned npm package to an `eval()` call in your source code—is automatically mapped to a specific ISO 27001:2022 control (e.g., _A.8.8 Management of technical vulnerabilities_, _A.5.22 Supplier monitoring_).
 
 ---
 
@@ -60,29 +60,34 @@ If you omit the `--format` flag, LeetGuard will interactively prompt you to choo
 ### Example Output
 
 ```text
-[LeetGuard] Scanning directory: ./my-react-app...
+LeetGuard v1.0.0  |  Scanning project...
 [LeetGuard] OSV API: Checked 1101 dependencies (all loaded from cache)
 [LeetGuard] NPM Registry: Checked 12 direct dependencies (12 loaded from cache)
 [LeetGuard] Scanning source code for anti-patterns...
+[INFO]  1101 packages resolved (12 direct, 1089 transitive)
+[CRIT]  3 critical CVEs found  |  [HIGH] 3  |  [MED] 0  |  [LOW] 0
+[WARN]  1 package not updated in over 2 years or deprecated
+[SAST]  2 categories of security anti-patterns detected
+[ISO]   Controls triggered: A.8.8  A.5.22  A.8.28
+[DONE]  Scan complete
 
-=== LeetGuard Security Report ===
-Scanned Directory: ./my-react-app
-Timestamp: 2026-06-13T18:00:00.000Z
-Total Dependencies: 1101
+[!] Detailed Findings:
 
-[!] Issues Found:
+>> Injection & Dynamic Execution
+  - [High] GHSA-vpq2-c234-7xj6
+    Description: [@tootallnate/once@1.1.2] Known Vulnerability
+    Trace: root ➔ jest ➔ @jest/core ➔ jsdom ➔ @tootallnate/once
+    ISO 27001 Mapping: A.8.8 Management of technical vulnerabilities
 
-- [High] Injection & Dynamic Execution (GHSA-vpq2-c234-7xj6)
-  Description: [@tootallnate/once@1.1.2] Known Vulnerability
-  ISO 27001 Mapping: A.14.2.8
+>> Supply Chain Risk
+  - [Medium] Abandoned Package
+    Description: [some-old-lib] Package has not been updated in 36 months.
+    ISO 27001 Mapping: A.5.22 Monitoring, review and change management of supplier services
 
-- [Medium] Supply Chain Risk (Abandoned Package)
-  Description: [some-old-lib] Package has not been updated in 36 months.
-  ISO 27001 Mapping: A.14.2.7
-
-- [High] Data Exposure (Data Exposure via console.log)
-  Description: src/utils/logger.ts:15 - Sensitive data may be exposed to logs.
-  ISO 27001 Mapping: A.13.1.1
+>> Data Exposure
+  - [High] Data Exposure via console.log
+    Description: src/utils/logger.ts:15 - Sensitive data may be exposed to logs.
+    ISO 27001 Mapping: A.8.28 Secure coding
 ```
 
 ---

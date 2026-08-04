@@ -8,16 +8,44 @@ import chalk from 'chalk';
  * @param report - The aggregated security report data.
  */
 export function generateTextReport(report: SecurityReport): void {
-  console.log(chalk.bold.blue(`\n=== LeetGuard Security Report ===`));
-  console.log(chalk.gray(`Scanned Directory: ${report.scannedDirectory}`));
-  console.log(chalk.gray(`Timestamp: ${report.timestamp}`));
-  console.log(chalk.gray(`Total Dependencies: ${report.totalDependencies}`));
-
   const allFindings = [
     ...report.vulnerabilities,
     ...(report.abandonedPackages || []),
     ...report.codeAntiPatterns,
   ];
+
+  // 1. Print Summary Statistics in Mockup format
+  console.log(chalk.gray(`[INFO]  ${report.totalDependencies} packages resolved (${report.directDependenciesCount} direct, ${report.transitiveDependenciesCount} transitive)`));
+
+  const cveHigh = report.vulnerabilities.filter(f => f.severity === 'High').length;
+  const cveMed = report.vulnerabilities.filter(f => f.severity === 'Medium').length;
+  const cveLow = report.vulnerabilities.filter(f => f.severity === 'Low').length;
+  
+  if (report.vulnerabilities.length > 0) {
+    console.log(chalk.red(`[CRIT]  ${report.vulnerabilities.length} critical CVEs found  |  [HIGH] ${cveHigh}  |  [MED] ${cveMed}  |  [LOW] ${cveLow}`));
+  } else {
+    console.log(chalk.green(`[CRIT]  0 CVEs found`));
+  }
+
+  if (report.abandonedPackages && report.abandonedPackages.length > 0) {
+    console.log(chalk.yellow(`[WARN]  ${report.abandonedPackages.length} packages not updated in over 2 years or deprecated`));
+  } else {
+    console.log(chalk.green(`[WARN]  0 abandoned packages found`));
+  }
+
+  if (report.codeAntiPatterns && report.codeAntiPatterns.length > 0) {
+    const categories = new Set(report.codeAntiPatterns.map(f => f.category)).size;
+    console.log(chalk.red(`[SAST]  ${categories} categories of security anti-patterns detected`));
+  } else {
+    console.log(chalk.green(`[SAST]  0 security anti-patterns detected`));
+  }
+
+  const uniqueIsos = new Set(allFindings.map(f => f.isoControl));
+  if (uniqueIsos.size > 0) {
+    console.log(chalk.green(`[ISO]   Controls triggered: ${Array.from(uniqueIsos).join('  ')}`));
+  }
+
+  console.log(chalk.gray(`[DONE]  Scan complete\n`));
 
   if (allFindings.length === 0) {
     console.log(
@@ -25,16 +53,6 @@ export function generateTextReport(report: SecurityReport): void {
     );
     return;
   }
-
-  // 1. Print Summary Statistics
-  const high = allFindings.filter((f) => f.severity === 'High').length;
-  const medium = allFindings.filter((f) => f.severity === 'Medium').length;
-  const low = allFindings.filter((f) => f.severity === 'Low').length;
-
-  console.log(chalk.bold(`\n📊 Summary:`));
-  if (high > 0) console.log(chalk.red(`  High Severity: ${high}`));
-  if (medium > 0) console.log(chalk.yellow(`  Medium Severity: ${medium}`));
-  if (low > 0) console.log(chalk.cyan(`  Low Severity: ${low}`));
 
   console.log(chalk.red(`\n[!] Detailed Findings:`));
 
