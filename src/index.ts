@@ -11,6 +11,7 @@ import { resolveTree } from './core/tree-resolver.js';
 import { generateTextReport } from './reporting/formats/text.js';
 import { generateJsonReport } from './reporting/formats/json.js';
 import { generateAuditReport } from './reporting/formats/audit.js';
+import { generateHtmlReport } from './reporting/formats/html.js';
 import { lookupCveBatch } from './intelligence/cve/osv-client.js';
 import { checkAbandonedPackages } from './intelligence/abandonment/npm-registry.js';
 import { scanSourceCode } from './intelligence/scanner/ast-scanner.js';
@@ -104,6 +105,8 @@ program
       generateJsonReport(report);
     } else if (format === 'audit') {
       generateAuditReport(report);
+    } else if (format === 'html') {
+      generateHtmlReport(report);
     } else {
       logger.log(
         chalk.yellow(

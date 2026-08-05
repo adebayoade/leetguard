@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO/IEC 27001 NON-CONFORMITY REPORT (NCR)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #111827;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f3f4f6;
+        }
+        .page {
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 4px solid #dc2626;
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            color: #dc2626;
+            margin: 0 0 1rem 0;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+        .meta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        .meta-table td {
+            padding: 0.5rem;
+            border: 1px solid #e5e7eb;
+        }
+        .meta-table td:first-child {
+            font-weight: bold;
+            background: #f9fafb;
+            width: 30%;
+        }
+        .summary-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .summary-box h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .ncr-card {
+            border: 2px solid #111827;
+            margin-bottom: 2rem;
+            page-break-inside: avoid;
+        }
+        .ncr-header {
+            background: #111827;
+            color: white;
+            padding: 0.75rem 1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+        .ncr-body {
+            padding: 0;
+        }
+        .ncr-row {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .ncr-row:last-child {
+            border-bottom: none;
+        }
+        .ncr-label {
+            font-weight: bold;
+            background: #f9fafb;
+            padding: 0.75rem 1rem;
+            width: 30%;
+            border-right: 1px solid #e5e7eb;
+        }
+        .ncr-value {
+            padding: 0.75rem 1rem;
+            width: 70%;
+        }
+        .trace {
+            font-family: monospace;
+            background: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        .status-compliant {
+            text-align: center;
+            color: #166534;
+            background: #dcfce7;
+            padding: 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">
+            <h1>ISO/IEC 27001 Non-Conformity Report</h1>
+        </div>
+
+        <table class="meta-table">
+            <tr>
+                <td>Report ID</td>
+                <td>NCR-6BDA4514</td>
+            </tr>
+            <tr>
+                <td>Date of Audit</td>
+                <td>2026-08-05</td>
+            </tr>
+            <tr>
+                <td>Audited System / Target</td>
+                <td>.</td>
+            </tr>
+            <tr>
+                <td>Total Dependencies Audited</td>
+                <td>1299</td>
+            </tr>
+        </table>
+
+        
+        <div class="summary-box">
+            <h2>Audit Summary</h2>
+            <p><strong>Major Non-Conformities (High Severity):</strong> <span style="color: #dc2626">38</span></p>
+            <p><strong>Minor Non-Conformities (Medium Severity):</strong> <span style="color: #d97706">0</span></p>
+            <p><strong>Observations (Low Severity):</strong> <span style="color: #2563eb">0</span></p>
+        </div>
+
+        <h2>Detailed Findings</h2>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-001</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@8.5.15] Known Vulnerability (GHSA-fxqj-rqcc-2cmp)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-002</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@8.5.15] Known Vulnerability (GHSA-r28c-9q8g-f849)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-003</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-4v9v-hfq4-rm2v)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-004</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-79cf-xcqc-c78w)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-005</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-9jgg-88mc-972h)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-006</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-f5vj-f2hx-8m93)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-007</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-m28w-2pqf-7qgj)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-008</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-mx8g-39q3-5c79)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-009</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[serialize-javascript@6.0.2] Known Vulnerability (GHSA-5c6j-r48x-rmvq)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ serialize-javascript</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-010</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[serialize-javascript@6.0.2] Known Vulnerability (GHSA-qj8w-gfj5-8c6v)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ serialize-javascript</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-011</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[js-yaml@4.2.0] Known Vulnerability (GHSA-52cp-r559-cp3m)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-012</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[shell-quote@1.8.4] Known Vulnerability (GHSA-395f-4hp3-45gv)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ react-dev-utils ➔ shell-quote</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-013</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-6g55-p6wh-862q)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-014</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-7fh5-64p2-3v2j)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-015</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-fxqj-rqcc-2cmp)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-016</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-qx2v-qp2m-jg93)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-017</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-r28c-9q8g-f849)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-018</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[http-proxy-middleware@2.0.9] Known Vulnerability (GHSA-64mm-vxmg-q3vj)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ http-proxy-middleware</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-019</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[svgo@1.3.2] Known Vulnerability (GHSA-2p49-hgcm-8545)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-020</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[underscore@1.13.6] Known Vulnerability (GHSA-qpx9-hpmf-5gmw)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ bfj ➔ jsonpath ➔ underscore</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-021</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[js-yaml@4.2.0] Known Vulnerability (GHSA-52cp-r559-cp3m)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ @eslint/eslintrc ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-022</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[brace-expansion@1.1.15] Known Vulnerability (GHSA-3jxr-9vmj-r5cp)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-023</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[brace-expansion@1.1.15] Known Vulnerability (GHSA-mh99-v99m-4gvg)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-024</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[brace-expansion@1.1.15] Known Vulnerability (GHSA-rgw5-rvv9-x895)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-025</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[body-parser@1.20.5] Known Vulnerability (GHSA-v422-hmwv-36x6)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ express ➔ body-parser</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-026</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[uuid@8.3.2] Known Vulnerability (GHSA-w5hq-g745-h8pq)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ sockjs ➔ uuid</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-027</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[fast-uri@3.1.2] Known Vulnerability (GHSA-4c8g-83qw-93j6)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-028</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[fast-uri@3.1.2] Known Vulnerability (GHSA-7p8r-x3mc-p8w7)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-029</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[fast-uri@3.1.2] Known Vulnerability (GHSA-v2hh-gcrm-f6hx)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-030</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[js-yaml@3.14.2] Known Vulnerability (GHSA-52cp-r559-cp3m)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-031</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[js-yaml@3.14.2] Known Vulnerability (GHSA-h67p-54hq-rp68)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-032</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[serialize-javascript@4.0.0] Known Vulnerability (GHSA-5c6j-r48x-rmvq)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ rollup-plugin-terser ➔ serialize-javascript</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-033</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[nth-check@1.0.2] Known Vulnerability (GHSA-rp65-9cf3-cjxr)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ css-select ➔ nth-check</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-034</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[svgo@2.8.2] Known Vulnerability (GHSA-2p49-hgcm-8545)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ cssnano ➔ cssnano-preset-default ➔ postcss-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-035</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[@tootallnate/once@1.1.2] Known Vulnerability (GHSA-vpq2-c234-7xj6)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ jest ➔ @jest/core ➔ jest-config ➔ jest-environment-jsdom ➔ jsdom ➔ http-proxy-agent ➔ @tootallnate/once</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-036</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[brace-expansion@2.1.1] Known Vulnerability (GHSA-3jxr-9vmj-r5cp)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-037</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[brace-expansion@2.1.1] Known Vulnerability (GHSA-mh99-v99m-4gvg)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-6BDA4514-038</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">[brace-expansion@2.1.1] Known Vulnerability (GHSA-rgw5-rvv9-x895)</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</body>
+</html>

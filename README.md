@@ -64,6 +64,7 @@ LeetGuard supports multiple output formats via the `--format` flag to accommodat
 - **`text`** (Default): A beautifully formatted, human-readable terminal output with color-coded findings and dependency traces.
 - **`json`**: Outputs the raw, structured findings array as JSON. Ideal for integrating LeetGuard into automated pipelines, SIEM tools, or custom dashboards.
 - **`audit`**: Formats the output in a formal "Major Non-Conformity" style, specifically designed for security auditors and compliance teams.
+- **`html`**: Generates a visually stunning, printable ISO 27001 Non-Conformity Report (NCR). Open the output file in a browser and click "Print to PDF" for a perfect, audit-ready compliance document.
 
 ### Example Output
 

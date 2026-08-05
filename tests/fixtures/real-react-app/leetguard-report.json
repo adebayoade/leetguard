@@ -1,0 +1,508 @@
+{
+  "timestamp": "2026-08-05T19:37:24.989Z",
+  "scannedDirectory": ".",
+  "totalDependencies": 1299,
+  "directDependenciesCount": 3,
+  "transitiveDependenciesCount": 1296,
+  "vulnerabilities": [
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-fxqj-rqcc-2cmp",
+      "severity": "High",
+      "description": "[postcss@8.5.15] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-r28c-9q8g-f849",
+      "severity": "High",
+      "description": "[postcss@8.5.15] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-4v9v-hfq4-rm2v",
+      "severity": "High",
+      "description": "[webpack-dev-server@4.15.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-79cf-xcqc-c78w",
+      "severity": "High",
+      "description": "[webpack-dev-server@4.15.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-9jgg-88mc-972h",
+      "severity": "High",
+      "description": "[webpack-dev-server@4.15.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-f5vj-f2hx-8m93",
+      "severity": "High",
+      "description": "[webpack-dev-server@4.15.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-m28w-2pqf-7qgj",
+      "severity": "High",
+      "description": "[webpack-dev-server@4.15.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-mx8g-39q3-5c79",
+      "severity": "High",
+      "description": "[webpack-dev-server@4.15.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-5c6j-r48x-rmvq",
+      "severity": "High",
+      "description": "[serialize-javascript@6.0.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "css-minimizer-webpack-plugin",
+        "serialize-javascript"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-qj8w-gfj5-8c6v",
+      "severity": "High",
+      "description": "[serialize-javascript@6.0.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "css-minimizer-webpack-plugin",
+        "serialize-javascript"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-52cp-r559-cp3m",
+      "severity": "High",
+      "description": "[js-yaml@4.2.0] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "eslint",
+        "js-yaml"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-395f-4hp3-45gv",
+      "severity": "High",
+      "description": "[shell-quote@1.8.4] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "react-dev-utils",
+        "shell-quote"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-6g55-p6wh-862q",
+      "severity": "High",
+      "description": "[postcss@7.0.39] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "resolve-url-loader",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-7fh5-64p2-3v2j",
+      "severity": "High",
+      "description": "[postcss@7.0.39] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "resolve-url-loader",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-fxqj-rqcc-2cmp",
+      "severity": "High",
+      "description": "[postcss@7.0.39] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "resolve-url-loader",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-qx2v-qp2m-jg93",
+      "severity": "High",
+      "description": "[postcss@7.0.39] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "resolve-url-loader",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-r28c-9q8g-f849",
+      "severity": "High",
+      "description": "[postcss@7.0.39] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "resolve-url-loader",
+        "postcss"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-64mm-vxmg-q3vj",
+      "severity": "High",
+      "description": "[http-proxy-middleware@2.0.9] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server",
+        "http-proxy-middleware"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-2p49-hgcm-8545",
+      "severity": "High",
+      "description": "[svgo@1.3.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@svgr/webpack",
+        "@svgr/plugin-svgo",
+        "svgo"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-qpx9-hpmf-5gmw",
+      "severity": "High",
+      "description": "[underscore@1.13.6] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "bfj",
+        "jsonpath",
+        "underscore"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-52cp-r559-cp3m",
+      "severity": "High",
+      "description": "[js-yaml@4.2.0] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "eslint",
+        "@eslint/eslintrc",
+        "js-yaml"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-3jxr-9vmj-r5cp",
+      "severity": "High",
+      "description": "[brace-expansion@1.1.15] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "eslint",
+        "minimatch",
+        "brace-expansion"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-mh99-v99m-4gvg",
+      "severity": "High",
+      "description": "[brace-expansion@1.1.15] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "eslint",
+        "minimatch",
+        "brace-expansion"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-rgw5-rvv9-x895",
+      "severity": "High",
+      "description": "[brace-expansion@1.1.15] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "eslint",
+        "minimatch",
+        "brace-expansion"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-v422-hmwv-36x6",
+      "severity": "High",
+      "description": "[body-parser@1.20.5] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server",
+        "express",
+        "body-parser"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-w5hq-g745-h8pq",
+      "severity": "High",
+      "description": "[uuid@8.3.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "webpack-dev-server",
+        "sockjs",
+        "uuid"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-4c8g-83qw-93j6",
+      "severity": "High",
+      "description": "[fast-uri@3.1.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@pmmmwh/react-refresh-webpack-plugin",
+        "schema-utils",
+        "ajv",
+        "fast-uri"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-7p8r-x3mc-p8w7",
+      "severity": "High",
+      "description": "[fast-uri@3.1.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@pmmmwh/react-refresh-webpack-plugin",
+        "schema-utils",
+        "ajv",
+        "fast-uri"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-v2hh-gcrm-f6hx",
+      "severity": "High",
+      "description": "[fast-uri@3.1.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@pmmmwh/react-refresh-webpack-plugin",
+        "schema-utils",
+        "ajv",
+        "fast-uri"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-52cp-r559-cp3m",
+      "severity": "High",
+      "description": "[js-yaml@3.14.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@svgr/webpack",
+        "@svgr/plugin-svgo",
+        "svgo",
+        "js-yaml"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-h67p-54hq-rp68",
+      "severity": "High",
+      "description": "[js-yaml@3.14.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@svgr/webpack",
+        "@svgr/plugin-svgo",
+        "svgo",
+        "js-yaml"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-5c6j-r48x-rmvq",
+      "severity": "High",
+      "description": "[serialize-javascript@4.0.0] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "workbox-webpack-plugin",
+        "workbox-build",
+        "rollup-plugin-terser",
+        "serialize-javascript"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-rp65-9cf3-cjxr",
+      "severity": "High",
+      "description": "[nth-check@1.0.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "@svgr/webpack",
+        "@svgr/plugin-svgo",
+        "svgo",
+        "css-select",
+        "nth-check"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-2p49-hgcm-8545",
+      "severity": "High",
+      "description": "[svgo@2.8.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "css-minimizer-webpack-plugin",
+        "cssnano",
+        "cssnano-preset-default",
+        "postcss-svgo",
+        "svgo"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-vpq2-c234-7xj6",
+      "severity": "High",
+      "description": "[@tootallnate/once@1.1.2] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "jest",
+        "@jest/core",
+        "jest-config",
+        "jest-environment-jsdom",
+        "jsdom",
+        "http-proxy-agent",
+        "@tootallnate/once"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-3jxr-9vmj-r5cp",
+      "severity": "High",
+      "description": "[brace-expansion@2.1.1] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "workbox-webpack-plugin",
+        "workbox-build",
+        "@surma/rollup-plugin-off-main-thread",
+        "ejs",
+        "jake",
+        "filelist",
+        "minimatch",
+        "brace-expansion"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-mh99-v99m-4gvg",
+      "severity": "High",
+      "description": "[brace-expansion@2.1.1] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "workbox-webpack-plugin",
+        "workbox-build",
+        "@surma/rollup-plugin-off-main-thread",
+        "ejs",
+        "jake",
+        "filelist",
+        "minimatch",
+        "brace-expansion"
+      ]
+    },
+    {
+      "category": "Injection & Dynamic Execution",
+      "patternName": "GHSA-rgw5-rvv9-x895",
+      "severity": "High",
+      "description": "[brace-expansion@2.1.1] Known Vulnerability",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "trace": [
+        "react-scripts",
+        "workbox-webpack-plugin",
+        "workbox-build",
+        "@surma/rollup-plugin-off-main-thread",
+        "ejs",
+        "jake",
+        "filelist",
+        "minimatch",
+        "brace-expansion"
+      ]
+    }
+  ],
+  "abandonedPackages": [],
+  "codeAntiPatterns": []
+}
