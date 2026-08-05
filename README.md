@@ -57,6 +57,14 @@ leetguard scan /path/to/project --format text
 
 If you omit the `--format` flag, LeetGuard will interactively prompt you to choose an output format.
 
+### Supported Output Formats
+
+LeetGuard supports multiple output formats via the `--format` flag to accommodate both developers and automated CI/CD pipelines:
+
+- **`text`** (Default): A beautifully formatted, human-readable terminal output with color-coded findings and dependency traces.
+- **`json`**: Outputs the raw, structured findings array as JSON. Ideal for integrating LeetGuard into automated pipelines, SIEM tools, or custom dashboards.
+- **`audit`**: Formats the output in a formal "Major Non-Conformity" style, specifically designed for security auditors and compliance teams.
+
 ### Example Output
 
 ```text
