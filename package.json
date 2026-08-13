@@ -16,7 +16,8 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "format": "prettier --write .",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "prepare": "husky"
   },
   "keywords": [
     "security",
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@types/babel__traverse": "^7.28.0",
     "@types/node": "^25.9.3",
+    "husky": "^9.1.7",
     "prettier": "^3.8.4",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
