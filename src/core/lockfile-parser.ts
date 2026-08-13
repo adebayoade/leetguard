@@ -45,7 +45,7 @@ function parseNpmLock(filePath: string): LockfileData {
     // Extract real package name from paths like "node_modules/chalk"
     const name = key.replace(/^.*node_modules\//, '');
 
-    dependencies.set(key, {
+    dependencies.set(name, {
       name,
       version: pkg.version,
       resolved: pkg.resolved,

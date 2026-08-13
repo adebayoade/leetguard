@@ -2,7 +2,7 @@
 
 LeetGuard is a lightning-fast, open-source CLI tool designed to parse package manager lockfiles and identify security anti-patterns across a project's dependency tree and source code. Built with modern Node.js environments in mind, it maps findings directly to **ISO 27001:2022 Annex A** controls, giving you immediate compliance and security insights without the noise of bloated commercial scanners.
 
-## 🚀 Key Features
+## Key Features
 
 ### 1. Intelligent Vulnerability Scanning (OSV API)
 
@@ -35,7 +35,7 @@ Every single finding—from an abandoned npm package to an `eval()` call in your
 
 ---
 
-## 📦 Installation
+## Installation
 
 To install LeetGuard globally on your machine:
 
@@ -47,7 +47,7 @@ _(Note: During development, you can run `npm run build` and use `node dist/index
 
 ---
 
-## 💻 Usage
+## Usage
 
 Run the `scan` command and point it to any project directory containing a `package-lock.json`:
 
@@ -101,7 +101,7 @@ LeetGuard v1.0.0  |  Scanning project...
 
 ---
 
-## 🛠 Architecture
+## Architecture
 
 LeetGuard is broken into four distinct layers:
 
@@ -110,6 +110,6 @@ LeetGuard is broken into four distinct layers:
 3. **Intelligence Layer**: The brains of the operation. Modules here include the OSV client, npm-registry checker, and the Babel-powered AST source code scanner.
 4. **Reporting Layer**: Formats the `Finding[]` arrays into beautiful `chalk`-colored outputs.
 
-## 📄 License
+## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](./LICENSE).
