@@ -1,6 +1,6 @@
 # LeetGuard
 
-LeetGuard is a lightning-fast, open-source CLI tool designed to parse package manager lockfiles and identify security anti-patterns across a project's dependency tree and source code. Built with modern Node.js environments in mind, it maps findings directly to **ISO 27001:2022 Annex A** controls, giving you immediate compliance and security insights without the noise of bloated commercial scanners.
+LeetGuard is a lightning-fast, open-source CLI tool designed to parse package manager lockfiles and identify security anti-patterns across a project's dependency tree and source code. Built for modern **Node.js, React, and React Native** environments, it maps findings directly to **ISO 27001:2022 Annex A** controls, giving you immediate compliance and security insights without the noise of bloated commercial scanners.
 
 ## Key Features
 
@@ -14,12 +14,11 @@ A package without CVEs isn't necessarily secure if it hasn't been updated in 5 y
 
 ### 3. AST Source Code Scanning
 
-Goes beyond dependencies to look at your actual code. It recursively parses `.js`, `.jsx`, `.ts`, and `.tsx` files into an Abstract Syntax Tree (AST) using Babel to identify critical anti-patterns, including:
+Goes beyond dependencies to look at your actual code. It recursively parses `.js`, `.jsx`, `.ts`, and `.tsx` files into an Abstract Syntax Tree (AST) using Babel to identify critical anti-patterns across backend and frontend codebases, including:
 
-- Dynamic execution (`eval`, `new Function`)
-- Data exposure (`console.log`, `AsyncStorage`)
-- Insecure transport protocols (`http://`)
-- React Native specific WebView vulnerabilities
+- **Node.js & General JS**: Dynamic execution (`eval`, `new Function`), insecure transport protocols (`http://`)
+- **React & React Native**: Unsafe component patterns, React Native specific WebView vulnerabilities, and sensitive data exposure in local storage (`AsyncStorage`)
+- **Data Exposure**: Accidentally leaving `console.log` with sensitive data in production builds
 
 ### 4. Persistent Filesystem Caching
 
