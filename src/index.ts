@@ -30,8 +30,17 @@ const pkg = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 
 program
   .name('leetguard')
-  .description('LeetGuard - Security Anti-Pattern Scanner for Node.js projects')
-  .version(pkg.version);
+  .description('LeetGuard - Security Anti-Pattern Scanner for Node.js and React projects')
+  .version(pkg.version)
+  .addHelpText(
+    'after',
+    `
+Examples:
+  $ leetguard scan .
+  $ leetguard scan /path/to/project --format text
+  $ leetguard scan /path/to/project --format json
+`,
+  );
 
 program
   .command('scan')
@@ -116,5 +125,10 @@ program
       generateTextReport(report);
     }
   });
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+  process.exit(0);
+}
 
 program.parse();
