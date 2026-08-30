@@ -20,7 +20,7 @@ describe('AST Scanner', () => {
 
     expect(findings.length).toBe(5);
 
-    const patternNames = findings.map((f) => f.patternName);
+    const patternNames = findings.map((f) => f.summary);
 
     expect(patternNames).toContain('eval() usage');
     expect(patternNames).toContain('new Function()');

@@ -4,6 +4,7 @@ import { CVE_ISO_CONTROL } from '../iso-mapper.js';
 import { getCache, setCache } from '../../core/cache.js';
 import chalk from 'chalk';
 import { logger } from '../../core/logger.js';
+import Cvss from 'cvss-calculator';
 
 const OSV_BATCH_URL = 'https://api.osv.dev/v1/querybatch';
 
@@ -28,7 +29,12 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
     const cachedFindings = getCache<Finding[]>(cacheKey);
 
     if (cachedFindings !== null) {
-      const findingsWithTrace = cachedFindings.map((f) => ({ ...f, trace: pkg.trace }));
+      const isDirect = pkg.trace ? pkg.trace.length === 1 : false;
+      const findingsWithTrace = cachedFindings.map((f) => ({
+        ...f,
+        traces: pkg.trace ? [pkg.trace] : [],
+        isDirect,
+      }));
       findings.push(...findingsWithTrace);
     } else {
       uncachedDeps.push(pkg);
@@ -82,6 +88,31 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
 
       const data = await response.json();
 
+      // Collect all unique vuln IDs to fetch full details
+      const vulnIdsToFetch = new Set<string>();
+      data.results?.forEach((result: any) => {
+        if (result.vulns) {
+          result.vulns.forEach((v: any) => vulnIdsToFetch.add(v.id));
+        }
+      });
+
+      // Fetch full details for these vulns
+      const fullVulnsMap: Record<string, any> = {};
+      if (vulnIdsToFetch.size > 0) {
+        const fetchPromises = Array.from(vulnIdsToFetch).map(async (id) => {
+          try {
+            const res = await fetch(`https://api.osv.dev/v1/vulns/${id}`);
+            if (res.ok) {
+              const vulnData = await res.json();
+              fullVulnsMap[id] = vulnData;
+            }
+          } catch (e) {
+            console.error(`Failed to fetch full details for ${id}`, e);
+          }
+        });
+        await Promise.all(fetchPromises);
+      }
+
       // The results array matches the queries array index
       data.results?.forEach((result: any, index: number) => {
         const pkg = chunkDeps[index];
@@ -89,13 +120,64 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
         const packageFindings: Finding[] = [];
 
         if (result.vulns && result.vulns.length > 0) {
-          result.vulns.forEach((vuln: any) => {
+          result.vulns.forEach((stubVuln: any) => {
+            const vuln = fullVulnsMap[stubVuln.id] || stubVuln;
+
+            // Check for available fixes in affected ranges
+            let hasFix = false;
+            if (vuln.affected) {
+              for (const affected of vuln.affected) {
+                if (affected.ranges) {
+                  for (const range of affected.ranges) {
+                    if (range.events) {
+                      for (const event of range.events) {
+                        if (event.fixed) hasFix = true;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            // Extract CVSS vector if present
+            let cvssObj = undefined;
+            if (vuln.severity && Array.isArray(vuln.severity)) {
+              const cvssV3 = vuln.severity.find((s: any) => s.type === 'CVSS_V3');
+              if (cvssV3) {
+                let score = 0;
+                try {
+                  const calc = new Cvss(cvssV3.score);
+                  const baseScore = calc.getBaseScore();
+                  if (typeof baseScore === 'number' && !isNaN(baseScore)) {
+                    score = baseScore;
+                  }
+                } catch (e) {
+                  // Fallback to 0 if parsing fails
+                }
+                cvssObj = { score, vectorString: cvssV3.score };
+              }
+            }
+
+            // Extract severity and CWE from database_specific
+            const dbSpecific = vuln.database_specific || {};
+            const extractedSeverity = dbSpecific.severity || 'Unknown';
+            const cweIds = dbSpecific.cwe_ids || [];
+            const aliases = vuln.aliases || [];
+
             packageFindings.push({
+              packageName: pkg.name,
+              packageVersion: pkg.version,
+              summary: vuln.summary,
+              details: vuln.details,
               category: 'Injection & Dynamic Execution',
-              patternName: vuln.id,
-              severity: 'High',
-              description: `[${pkg.name}@${pkg.version}] ${vuln.summary || vuln.details || 'Known Vulnerability'}`,
+              id: vuln.id,
+              severity: extractedSeverity,
               isoControl: CVE_ISO_CONTROL,
+              fixAvailable: hasFix,
+              cvss: cvssObj,
+              cwe: cweIds,
+              aliases,
+              url: `https://osv.dev/vulnerability/${vuln.id}`,
             });
           });
         }
@@ -104,7 +186,12 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
         setCache(cacheKey, packageFindings, 12);
 
         // Add the trace for the current run
-        const findingsWithTrace = packageFindings.map((f) => ({ ...f, trace: pkg.trace }));
+        const isDirect = pkg.trace ? pkg.trace.length === 1 : false;
+        const findingsWithTrace = packageFindings.map((f) => ({
+          ...f,
+          traces: pkg.trace ? [pkg.trace] : [],
+          isDirect,
+        }));
         findings.push(...findingsWithTrace);
       });
     } catch (error) {
@@ -112,5 +199,23 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
     }
   }
 
-  return findings;
+  // Deduplicate findings by CVE ID and package name/version
+  const groupedFindings = new Map<string, Finding>();
+  for (const f of findings) {
+    const key = `${f.id}|${f.packageName}@${f.packageVersion}`;
+    if (groupedFindings.has(key)) {
+      const existing = groupedFindings.get(key)!;
+      if (f.traces && f.traces.length > 0) {
+        existing.traces = existing.traces || [];
+        existing.traces.push(f.traces[0]);
+      }
+      if (f.isDirect) {
+        existing.isDirect = true;
+      }
+    } else {
+      groupedFindings.set(key, f);
+    }
+  }
+
+  return Array.from(groupedFindings.values());
 }

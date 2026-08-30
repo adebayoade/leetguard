@@ -36,22 +36,35 @@ function parseNpmLock(filePath: string): LockfileData {
   // Support npm v2 and v3 lockfiles
   const packages = json.packages || json.dependencies || {};
   const rootPackage = packages[''] || {};
-  const rootDependencies = rootPackage.dependencies || {};
+  const rootDependencies = {
+    ...(rootPackage.dependencies || {}),
+    ...(rootPackage.devDependencies || {}),
+    ...(rootPackage.optionalDependencies || {}),
+    ...(rootPackage.peerDependencies || {}),
+  };
 
   for (const [key, pkg] of Object.entries<any>(packages)) {
     // In package-lock v2/v3, the root project is ""
     if (key === '') continue;
 
-    // Extract real package name from paths like "node_modules/chalk"
-    const name = key.replace(/^.*node_modules\//, '');
+    // Extract real package name, prioritizing pkg.name if available (for linked workspaces/libraries)
+    const name = pkg.name || key.replace(/^.*node_modules\//, '');
 
-    dependencies.set(name, {
+    dependencies.set(key, {
       name,
       version: pkg.version,
       resolved: pkg.resolved,
       integrity: pkg.integrity,
       dev: pkg.dev || false,
-      dependencies: pkg.dependencies || pkg.requires || {},
+      optional: pkg.optional || false,
+      peer: pkg.peer || false,
+      peerOptional: pkg.peerOptional || (pkg.peer && pkg.optional) || false,
+      dependencies: {
+        ...(pkg.dependencies || {}),
+        ...(pkg.requires || {}),
+        ...(pkg.optionalDependencies || {}),
+        ...(pkg.peerDependencies || {}),
+      },
     });
   }
 

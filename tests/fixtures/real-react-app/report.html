@@ -123,11 +123,11 @@
         <table class="meta-table">
             <tr>
                 <td>Report ID</td>
-                <td>NCR-6BDA4514</td>
+                <td>NCR-1F1AA65D</td>
             </tr>
             <tr>
                 <td>Date of Audit</td>
-                <td>2026-08-05</td>
+                <td>2026-08-30</td>
             </tr>
             <tr>
                 <td>Audited System / Target</td>
@@ -142,17 +142,17 @@
         
         <div class="summary-box">
             <h2>Audit Summary</h2>
-            <p><strong>Major Non-Conformities (High Severity):</strong> <span style="color: #dc2626">38</span></p>
-            <p><strong>Minor Non-Conformities (Medium Severity):</strong> <span style="color: #d97706">0</span></p>
-            <p><strong>Observations (Low Severity):</strong> <span style="color: #2563eb">0</span></p>
+            <p><strong>Major Non-Conformities (High Severity):</strong> <span style="color: #dc2626">27</span></p>
+            <p><strong>Minor Non-Conformities (Medium Severity):</strong> <span style="color: #d97706">14</span></p>
+            <p><strong>Observations (Low Severity):</strong> <span style="color: #2563eb">2</span></p>
         </div>
 
         <h2>Detailed Findings</h2>
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-001</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-001</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -165,11 +165,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@8.5.15] Known Vulnerability (GHSA-fxqj-rqcc-2cmp)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-fxqj-rqcc-2cmp<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 8.5.15<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-69153<br/>
+                        
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp" target="_blank">https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -180,7 +189,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-002</span>
+                <span>Finding ID: NCR-1F1AA65D-002</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -194,11 +203,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@8.5.15] Known Vulnerability (GHSA-r28c-9q8g-f849)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-r28c-9q8g-f849<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 8.5.15<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-73646<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849" target="_blank">https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -209,8 +227,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-003</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-003</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -223,11 +241,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-4v9v-hfq4-rm2v)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> webpack-dev-server users' source code may be stolen when they access a malicious web site<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-4v9v-hfq4-rm2v<br/>
+                        <strong>Package:</strong> webpack-dev-server<br/>
+                        <strong>Version:</strong> 4.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2025-30359<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4v9v-hfq4-rm2v" target="_blank">https://osv.dev/vulnerability/GHSA-4v9v-hfq4-rm2v</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -238,8 +265,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-004</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-004</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -252,11 +279,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-79cf-xcqc-c78w)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> webpack-dev-server vulnerable to cross-origin source code exposure on non-HTTPS origins<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-79cf-xcqc-c78w<br/>
+                        <strong>Package:</strong> webpack-dev-server<br/>
+                        <strong>Version:</strong> 4.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-6402<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-79cf-xcqc-c78w" target="_blank">https://osv.dev/vulnerability/GHSA-79cf-xcqc-c78w</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -267,8 +303,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-005</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-005</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -281,11 +317,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-9jgg-88mc-972h)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> webpack-dev-server users' source code may be stolen when they access a malicious web site with non-Chromium based browser<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-9jgg-88mc-972h<br/>
+                        <strong>Package:</strong> webpack-dev-server<br/>
+                        <strong>Version:</strong> 4.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2025-30360<br/>
+                        <strong>CVSS Score:</strong> 6.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-9jgg-88mc-972h" target="_blank">https://osv.dev/vulnerability/GHSA-9jgg-88mc-972h</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -296,8 +341,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-006</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-006</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -310,11 +355,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-f5vj-f2hx-8m93)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> webpack-dev-server vulnerable to cross-site request forgery via internal developer endpoints<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-f5vj-f2hx-8m93<br/>
+                        <strong>Package:</strong> webpack-dev-server<br/>
+                        <strong>Version:</strong> 4.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-14620<br/>
+                        <strong>CVSS Score:</strong> 4.7 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-f5vj-f2hx-8m93" target="_blank">https://osv.dev/vulnerability/GHSA-f5vj-f2hx-8m93</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -325,8 +379,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-007</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-007</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -339,11 +393,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-m28w-2pqf-7qgj)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> webpack-dev-server vulnerable to denial of service via a malformed Host or Origin header<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-m28w-2pqf-7qgj<br/>
+                        <strong>Package:</strong> webpack-dev-server<br/>
+                        <strong>Version:</strong> 4.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-14631<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-m28w-2pqf-7qgj" target="_blank">https://osv.dev/vulnerability/GHSA-m28w-2pqf-7qgj</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -354,8 +417,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-008</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-008</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -368,11 +431,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[webpack-dev-server@4.15.2] Known Vulnerability (GHSA-mx8g-39q3-5c79)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> webpack-dev-server vulnerable to HMR WebSocket interception via permissive user proxies<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-mx8g-39q3-5c79<br/>
+                        <strong>Package:</strong> webpack-dev-server<br/>
+                        <strong>Version:</strong> 4.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-9595<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-mx8g-39q3-5c79" target="_blank">https://osv.dev/vulnerability/GHSA-mx8g-39q3-5c79</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -383,7 +455,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-009</span>
+                <span>Finding ID: NCR-1F1AA65D-009</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -397,11 +469,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[serialize-javascript@6.0.2] Known Vulnerability (GHSA-5c6j-r48x-rmvq)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString()<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-5c6j-r48x-rmvq<br/>
+                        <strong>Package:</strong> serialize-javascript<br/>
+                        <strong>Version:</strong> 6.0.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        
+                        <strong>CVSS Score:</strong> 8.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq" target="_blank">https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ serialize-javascript</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ serialize-javascript</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -412,8 +493,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-010</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-010</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -426,11 +507,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[serialize-javascript@6.0.2] Known Vulnerability (GHSA-qj8w-gfj5-8c6v)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Serialize JavaScript has CPU Exhaustion Denial of Service via crafted array-like objects<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-qj8w-gfj5-8c6v<br/>
+                        <strong>Package:</strong> serialize-javascript<br/>
+                        <strong>Version:</strong> 6.0.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-34043<br/>
+                        <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-qj8w-gfj5-8c6v" target="_blank">https://osv.dev/vulnerability/GHSA-qj8w-gfj5-8c6v</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ serialize-javascript</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ serialize-javascript</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -441,7 +531,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-011</span>
+                <span>Finding ID: NCR-1F1AA65D-011</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -455,11 +545,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[js-yaml@4.2.0] Known Vulnerability (GHSA-52cp-r559-cp3m)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> js-yaml: YAML merge-key chains can force quadratic CPU consumption<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-52cp-r559-cp3m<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 4.2.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-59869<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m" target="_blank">https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ js-yaml</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -470,7 +569,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-012</span>
+                <span>Finding ID: NCR-1F1AA65D-012</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -484,11 +583,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[shell-quote@1.8.4] Known Vulnerability (GHSA-395f-4hp3-45gv)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-5p4m-2wfm-xmqj<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 4.2.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj" target="_blank">https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ react-dev-utils ➔ shell-quote</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -499,7 +607,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-013</span>
+                <span>Finding ID: NCR-1F1AA65D-013</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -513,11 +621,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-6g55-p6wh-862q)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> nanoid: non-secure generators can loop indefinitely with negative size<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-28wg-ghj8-5hjv<br/>
+                        <strong>Package:</strong> nanoid<br/>
+                        <strong>Version:</strong> 3.3.12<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-67214<br/>
+                        <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-28wg-ghj8-5hjv" target="_blank">https://osv.dev/vulnerability/GHSA-28wg-ghj8-5hjv</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ postcss ➔ nanoid</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -528,7 +645,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-014</span>
+                <span>Finding ID: NCR-1F1AA65D-014</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -542,11 +659,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-7fh5-64p2-3v2j)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> nanoid: custom generators can loop indefinitely when size is zero<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2v37-7h3g-55p8<br/>
+                        <strong>Package:</strong> nanoid<br/>
+                        <strong>Version:</strong> 3.3.12<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-67213<br/>
+                        <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2v37-7h3g-55p8" target="_blank">https://osv.dev/vulnerability/GHSA-2v37-7h3g-55p8</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ postcss ➔ nanoid</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -557,7 +683,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-015</span>
+                <span>Finding ID: NCR-1F1AA65D-015</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -571,11 +697,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-fxqj-rqcc-2cmp)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> shell-quote: Quadratic-complexity Denial of Service in `parse()` (CWE-407)<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-395f-4hp3-45gv<br/>
+                        <strong>Package:</strong> shell-quote<br/>
+                        <strong>Version:</strong> 1.8.4<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-13311<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-395f-4hp3-45gv" target="_blank">https://osv.dev/vulnerability/GHSA-395f-4hp3-45gv</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ react-dev-utils ➔ shell-quote</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -586,7 +721,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-016</span>
+                <span>Finding ID: NCR-1F1AA65D-016</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -600,11 +735,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-qx2v-qp2m-jg93)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-6g55-p6wh-862q<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 7.0.39<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-45623<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-6g55-p6wh-862q" target="_blank">https://osv.dev/vulnerability/GHSA-6g55-p6wh-862q</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -615,8 +759,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-017</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-017</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -629,11 +773,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[postcss@7.0.39] Known Vulnerability (GHSA-r28c-9q8g-f849)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS line return parsing error<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-7fh5-64p2-3v2j<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 7.0.39<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2023-44270<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-7fh5-64p2-3v2j" target="_blank">https://osv.dev/vulnerability/GHSA-7fh5-64p2-3v2j</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -644,8 +797,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-018</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-018</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -658,11 +811,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[http-proxy-middleware@2.0.9] Known Vulnerability (GHSA-64mm-vxmg-q3vj)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-fxqj-rqcc-2cmp<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 7.0.39<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-69153<br/>
+                        
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp" target="_blank">https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ http-proxy-middleware</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -673,8 +835,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-019</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-019</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -687,11 +849,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[svgo@1.3.2] Known Vulnerability (GHSA-2p49-hgcm-8545)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS has XSS via Unescaped </style> in its CSS Stringify Output<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-qx2v-qp2m-jg93<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 7.0.39<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-41305<br/>
+                        <strong>CVSS Score:</strong> 6.1 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-qx2v-qp2m-jg93" target="_blank">https://osv.dev/vulnerability/GHSA-qx2v-qp2m-jg93</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -702,7 +873,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-020</span>
+                <span>Finding ID: NCR-1F1AA65D-020</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -716,11 +887,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[underscore@1.13.6] Known Vulnerability (GHSA-qpx9-hpmf-5gmw)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-r28c-9q8g-f849<br/>
+                        <strong>Package:</strong> postcss<br/>
+                        <strong>Version:</strong> 7.0.39<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-73646<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849" target="_blank">https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ bfj ➔ jsonpath ➔ underscore</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ resolve-url-loader ➔ postcss</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -731,8 +911,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-021</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-021</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -745,11 +925,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[js-yaml@4.2.0] Known Vulnerability (GHSA-52cp-r559-cp3m)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> http-proxy-middleware `router` host+path substring matching allows Host-header-driven backend routing bypass<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-64mm-vxmg-q3vj<br/>
+                        <strong>Package:</strong> http-proxy-middleware<br/>
+                        <strong>Version:</strong> 2.0.9<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-55602<br/>
+                        
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-64mm-vxmg-q3vj" target="_blank">https://osv.dev/vulnerability/GHSA-64mm-vxmg-q3vj</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ @eslint/eslintrc ➔ js-yaml</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ http-proxy-middleware</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -760,7 +949,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-022</span>
+                <span>Finding ID: NCR-1F1AA65D-022</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -774,11 +963,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[brace-expansion@1.1.15] Known Vulnerability (GHSA-3jxr-9vmj-r5cp)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> SVGO removeScripts plugin leaves some executable scripts intact<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2p49-hgcm-8545<br/>
+                        <strong>Package:</strong> svgo<br/>
+                        <strong>Version:</strong> 1.3.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-73650<br/>
+                        <strong>CVSS Score:</strong> 8.2 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545" target="_blank">https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -789,7 +987,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-023</span>
+                <span>Finding ID: NCR-1F1AA65D-023</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -803,11 +1001,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[brace-expansion@1.1.15] Known Vulnerability (GHSA-mh99-v99m-4gvg)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Underscore has unlimited recursion in _.flatten and _.isEqual, potential for DoS attack<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-qpx9-hpmf-5gmw<br/>
+                        <strong>Package:</strong> underscore<br/>
+                        <strong>Version:</strong> 1.13.6<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-27601<br/>
+                        <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-qpx9-hpmf-5gmw" target="_blank">https://osv.dev/vulnerability/GHSA-qpx9-hpmf-5gmw</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ bfj ➔ jsonpath ➔ underscore</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -818,7 +1025,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-024</span>
+                <span>Finding ID: NCR-1F1AA65D-024</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -832,11 +1039,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[brace-expansion@1.1.15] Known Vulnerability (GHSA-rgw5-rvv9-x895)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> js-yaml: YAML merge-key chains can force quadratic CPU consumption<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-52cp-r559-cp3m<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 4.2.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-59869<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m" target="_blank">https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ @eslint/eslintrc ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -847,7 +1063,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-025</span>
+                <span>Finding ID: NCR-1F1AA65D-025</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -861,11 +1077,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[body-parser@1.20.5] Known Vulnerability (GHSA-v422-hmwv-36x6)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-5p4m-2wfm-xmqj<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 4.2.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj" target="_blank">https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ express ➔ body-parser</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ @eslint/eslintrc ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -876,7 +1101,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-026</span>
+                <span>Finding ID: NCR-1F1AA65D-026</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -890,11 +1115,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[uuid@8.3.2] Known Vulnerability (GHSA-w5hq-g745-h8pq)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-3jxr-9vmj-r5cp<br/>
+                        <strong>Package:</strong> brace-expansion<br/>
+                        <strong>Version:</strong> 1.1.15<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-13149<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp" target="_blank">https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ sockjs ➔ uuid</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -905,7 +1139,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-027</span>
+                <span>Finding ID: NCR-1F1AA65D-027</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -919,11 +1153,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[fast-uri@3.1.2] Known Vulnerability (GHSA-4c8g-83qw-93j6)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-mh99-v99m-4gvg<br/>
+                        <strong>Package:</strong> brace-expansion<br/>
+                        <strong>Version:</strong> 1.1.15<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-14257<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg" target="_blank">https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -934,7 +1177,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-028</span>
+                <span>Finding ID: NCR-1F1AA65D-028</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -948,11 +1191,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[fast-uri@3.1.2] Known Vulnerability (GHSA-7p8r-x3mc-p8w7)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-rgw5-rvv9-x895<br/>
+                        <strong>Package:</strong> brace-expansion<br/>
+                        <strong>Version:</strong> 1.1.15<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-69152<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895" target="_blank">https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ minimatch ➔ brace-expansion</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -963,8 +1215,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-029</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-029</span>
+                <span>[OBSERVATION]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -977,11 +1229,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[fast-uri@3.1.2] Known Vulnerability (GHSA-v2hh-gcrm-f6hx)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> body-parser vulnerable to denial of service when invalid limit value silently disables size enforcement<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-v422-hmwv-36x6<br/>
+                        <strong>Package:</strong> body-parser<br/>
+                        <strong>Version:</strong> 1.20.5<br/>
+                        <strong>Severity:</strong> LOW<br/>
+                        <strong>CVE ID:</strong> CVE-2026-12590<br/>
+                        <strong>CVSS Score:</strong> 3.7 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-v422-hmwv-36x6" target="_blank">https://osv.dev/vulnerability/GHSA-v422-hmwv-36x6</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ express ➔ body-parser</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -992,8 +1253,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-030</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-030</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -1006,11 +1267,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[js-yaml@3.14.2] Known Vulnerability (GHSA-52cp-r559-cp3m)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-w5hq-g745-h8pq<br/>
+                        <strong>Package:</strong> uuid<br/>
+                        <strong>Version:</strong> 8.3.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-41907, CVE-2026-41988<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-w5hq-g745-h8pq" target="_blank">https://osv.dev/vulnerability/GHSA-w5hq-g745-h8pq</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ sockjs ➔ uuid</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1021,7 +1291,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-031</span>
+                <span>Finding ID: NCR-1F1AA65D-031</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1035,11 +1305,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[js-yaml@3.14.2] Known Vulnerability (GHSA-h67p-54hq-rp68)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> fast-uri vulnerable to host confusion via failed IDN canonicalization<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-4c8g-83qw-93j6<br/>
+                        <strong>Package:</strong> fast-uri<br/>
+                        <strong>Version:</strong> 3.1.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-13676<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4c8g-83qw-93j6" target="_blank">https://osv.dev/vulnerability/GHSA-4c8g-83qw-93j6</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1050,7 +1329,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-032</span>
+                <span>Finding ID: NCR-1F1AA65D-032</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1064,11 +1343,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[serialize-javascript@4.0.0] Known Vulnerability (GHSA-5c6j-r48x-rmvq)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> fast-uri vulnerable to host confusion via backslash authority introducer<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-7p8r-x3mc-p8w7<br/>
+                        <strong>Package:</strong> fast-uri<br/>
+                        <strong>Version:</strong> 3.1.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-18446<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-7p8r-x3mc-p8w7" target="_blank">https://osv.dev/vulnerability/GHSA-7p8r-x3mc-p8w7</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ rollup-plugin-terser ➔ serialize-javascript</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1079,7 +1367,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-033</span>
+                <span>Finding ID: NCR-1F1AA65D-033</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1093,11 +1381,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[nth-check@1.0.2] Known Vulnerability (GHSA-rp65-9cf3-cjxr)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> fast-uri vulnerable to host confusion via literal backslash authority delimiter<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-v2hh-gcrm-f6hx<br/>
+                        <strong>Package:</strong> fast-uri<br/>
+                        <strong>Version:</strong> 3.1.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-16221<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-v2hh-gcrm-f6hx" target="_blank">https://osv.dev/vulnerability/GHSA-v2hh-gcrm-f6hx</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ css-select ➔ nth-check</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1108,7 +1405,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-034</span>
+                <span>Finding ID: NCR-1F1AA65D-034</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1122,11 +1419,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[svgo@2.8.2] Known Vulnerability (GHSA-2p49-hgcm-8545)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> js-yaml: YAML merge-key chains can force quadratic CPU consumption<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-52cp-r559-cp3m<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 3.14.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-59869<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m" target="_blank">https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ cssnano ➔ cssnano-preset-default ➔ postcss-svgo ➔ svgo</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1137,7 +1443,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-035</span>
+                <span>Finding ID: NCR-1F1AA65D-035</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1151,11 +1457,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[@tootallnate/once@1.1.2] Known Vulnerability (GHSA-vpq2-c234-7xj6)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> JS-YAML: Quadratic CPU consumption in !!omap resolution (3.x and 4.x) — CVE-2026-59870 fix not backported<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-5p4m-2wfm-xmqj<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 3.14.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj" target="_blank">https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ jest ➔ @jest/core ➔ jest-config ➔ jest-environment-jsdom ➔ jsdom ➔ http-proxy-agent ➔ @tootallnate/once</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1166,8 +1481,8 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-036</span>
-                <span>[MAJOR NON-CONFORMITY]</span>
+                <span>Finding ID: NCR-1F1AA65D-036</span>
+                <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
                 <div class="ncr-row">
@@ -1180,11 +1495,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[brace-expansion@2.1.1] Known Vulnerability (GHSA-3jxr-9vmj-r5cp)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> JS-YAML: Quadratic-complexity DoS in merge key handling via repeated aliases<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-h67p-54hq-rp68<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 3.14.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-53550<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-h67p-54hq-rp68" target="_blank">https://osv.dev/vulnerability/GHSA-h67p-54hq-rp68</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1195,7 +1519,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-037</span>
+                <span>Finding ID: NCR-1F1AA65D-037</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1209,11 +1533,20 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[brace-expansion@2.1.1] Known Vulnerability (GHSA-mh99-v99m-4gvg)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Serialize JavaScript is Vulnerable to RCE via RegExp.flags and Date.prototype.toISOString()<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-5c6j-r48x-rmvq<br/>
+                        <strong>Package:</strong> serialize-javascript<br/>
+                        <strong>Version:</strong> 4.0.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        
+                        <strong>CVSS Score:</strong> 8.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq" target="_blank">https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ rollup-plugin-terser ➔ serialize-javascript</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>
@@ -1224,7 +1557,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-6BDA4514-038</span>
+                <span>Finding ID: NCR-1F1AA65D-038</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1238,11 +1571,210 @@
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">[brace-expansion@2.1.1] Known Vulnerability (GHSA-rgw5-rvv9-x895)</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Inefficient Regular Expression Complexity in nth-check<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-rp65-9cf3-cjxr<br/>
+                        <strong>Package:</strong> nth-check<br/>
+                        <strong>Version:</strong> 1.0.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2021-3803<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-rp65-9cf3-cjxr" target="_blank">https://osv.dev/vulnerability/GHSA-rp65-9cf3-cjxr</a>
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>
-                    <div class="ncr-value">Dependency Trace: <span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ css-select ➔ nth-check</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-1F1AA65D-039</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> SVGO removeScripts plugin leaves some executable scripts intact<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2p49-hgcm-8545<br/>
+                        <strong>Package:</strong> svgo<br/>
+                        <strong>Version:</strong> 2.8.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-73650<br/>
+                        <strong>CVSS Score:</strong> 8.2 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545" target="_blank">https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ cssnano ➔ cssnano-preset-default ➔ postcss-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-1F1AA65D-040</span>
+                <span>[OBSERVATION]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> @tootallnate/once vulnerable to Incorrect Control Flow Scoping<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-vpq2-c234-7xj6<br/>
+                        <strong>Package:</strong> @tootallnate/once<br/>
+                        <strong>Version:</strong> 1.1.2<br/>
+                        <strong>Severity:</strong> LOW<br/>
+                        <strong>CVE ID:</strong> CVE-2026-3449<br/>
+                        <strong>CVSS Score:</strong> 3.3 (CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-vpq2-c234-7xj6" target="_blank">https://osv.dev/vulnerability/GHSA-vpq2-c234-7xj6</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ jest ➔ @jest/core ➔ jest-config ➔ jest-environment-jsdom ➔ jsdom ➔ http-proxy-agent ➔ @tootallnate/once</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-1F1AA65D-041</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-3jxr-9vmj-r5cp<br/>
+                        <strong>Package:</strong> brace-expansion<br/>
+                        <strong>Version:</strong> 2.1.1<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-13149<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp" target="_blank">https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-1F1AA65D-042</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-mh99-v99m-4gvg<br/>
+                        <strong>Package:</strong> brace-expansion<br/>
+                        <strong>Version:</strong> 2.1.1<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-14257<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg" target="_blank">https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-1F1AA65D-043</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> brace-expansion: DoS via unbounded intermediate arrays, bypassing the CVE-2026-14257 mitigation<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-rgw5-rvv9-x895<br/>
+                        <strong>Package:</strong> brace-expansion<br/>
+                        <strong>Version:</strong> 2.1.1<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-69152<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895" target="_blank">https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ workbox-webpack-plugin ➔ workbox-build ➔ @surma/rollup-plugin-off-main-thread ➔ ejs ➔ jake ➔ filelist ➔ minimatch ➔ brace-expansion</span></div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Corrective Action Required</div>

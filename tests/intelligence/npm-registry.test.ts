@@ -21,7 +21,7 @@ describe('checkAbandonedPackages', () => {
     const findings = await checkAbandonedPackages(['old-package']);
     expect(findings.length).toBe(1);
     expect(findings[0].category).toBe('Supply Chain Risk');
-    expect(findings[0].patternName).toBe('Abandoned Package');
+    expect(findings[0].summary).toBe('Abandoned Package');
 
     vi.useRealTimers();
   });

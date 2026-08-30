@@ -75,10 +75,14 @@ export async function checkAbandonedPackages(directDependencies: string[]): Prom
             if (monthsDiff >= ABANDONED_THRESHOLD_MONTHS) {
               pkgFindings.push({
                 category: 'Supply Chain Risk',
-                patternName: 'Abandoned Package',
+                id: 'ABANDONED_PACKAGE',
+                packageName: pkgName,
                 severity: 'Medium',
-                description: `[${pkgName}] Package has not been updated in ${monthsDiff} months.`,
+                summary: 'Abandoned Package',
+                details: `[${pkgName}] Package has not been updated in ${monthsDiff} months.`,
                 isoControl: getIsoControl('Abandoned Package'), // Outsourced development
+                fixAvailable: false,
+                traces: [['root', pkgName]],
               });
             }
           }

@@ -150,10 +150,13 @@ function createFinding(patternName: string, file: string, line: number | undefin
 
   return {
     category,
-    patternName,
+    id: patternName.toUpperCase().replace(/[^A-Z0-9]/g, '_'),
     severity: 'High',
-    description: `Found in ${file}${lineSuffix}`,
+    summary: patternName,
+    details: `Found in ${file}${lineSuffix}`,
     isoControl: getIsoControl(patternName),
+    fixAvailable: false,
+    location: `${file}${lineSuffix}`,
   };
 }
 

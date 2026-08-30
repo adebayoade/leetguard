@@ -61,9 +61,14 @@ If you omit the `--format` flag, LeetGuard will interactively prompt you to choo
 LeetGuard supports multiple output formats via the `--format` flag to accommodate both developers and automated CI/CD pipelines:
 
 - **`text`** (Default): A beautifully formatted, human-readable terminal output with color-coded findings and dependency traces.
-- **`json`**: Outputs the raw, structured findings array as JSON. Ideal for integrating LeetGuard into automated pipelines, SIEM tools, or custom dashboards.
-- **`audit`**: Formats the output in a formal "Major Non-Conformity" style, specifically designed for security auditors and compliance teams.
-- **`html`**: Generates a visually stunning, printable ISO 27001 Non-Conformity Report (NCR). Open the output file in a browser and click "Print to PDF" for a perfect, audit-ready compliance document.
+- **`json`**: Outputs the raw, structured findings array as JSON. Ideal for integrating LeetGuard into automated pipelines, SIEM tools, or custom dashboards. Includes exact package names, versions, severity levels, and CVE IDs.
+- **`audit`** and **`html`**: Both formats generate a formal ISO 27001 Non-Conformity Report (NCR) tailored for security auditors and compliance teams. They include:
+  - **Dynamic NCR ID Generation**: Every scan automatically generates a unique report ID (e.g., `NCR-1F1AA65D`) using cryptographic randomness, and sequentially numbers every finding (e.g., `NCR-1F1AA65D-001`).
+  - **Automated Severity Mapping**: Findings are mapped to compliance standards based on their OSV severity:
+    - **MAJOR NON-CONFORMITY**: For `CRITICAL` and `HIGH` vulnerabilities.
+    - **MINOR NON-CONFORMITY**: For `MODERATE` vulnerabilities.
+    - **OBSERVATION**: For `LOW` and `INFO` vulnerabilities.
+  - **Clean Metadata**: Technical jargon and long markdown descriptions are intentionally omitted. Instead, findings are summarized with actionable metadata, including Package Name, Package Version, Vulnerability ID, CVE ID, CVSS Score, Severity, and the direct OSV URL.
 
 ### Example Output
 
@@ -99,6 +104,14 @@ LeetGuard v1.0.0  |  Scanning project...
 ```
 
 ---
+
+## How It Works
+
+1. **Lockfile Parsing:** LeetGuard reads your `package-lock.json` and builds an in-memory dependency tree, computing the exact node resolution paths and traces for how every package is included.
+2. **OSV Batch Querying:** It gathers all the unique package versions and sends a highly-optimized batch query (`/querybatch`) to the OSV (Open Source Vulnerability) API. This completely bypasses rate-limiting and retrieves results for thousands of packages in mere seconds.
+3. **AST Scanning:** It crawls your source code directories (ignoring `node_modules` and hidden folders), using Babel to build an Abstract Syntax Tree (AST) of your TypeScript and JavaScript files. It traverses the AST to flag anti-patterns like `eval()` usage or insecure connections.
+4. **Data Aggregation:** Findings from OSV, npm registry abandonment checks, and source code scans are grouped, deduplicated, and mapped to specific ISO 27001 compliance controls.
+5. **Report Generation:** Based on your chosen `--format`, it filters the data and streams it out. For compliance outputs (`audit` and `html`), it strips out excessive vulnerability details to prioritize clean metadata for auditors.
 
 ## Architecture
 

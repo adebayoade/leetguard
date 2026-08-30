@@ -74,7 +74,7 @@ export function resolveTree(lockfile: LockfileData): PackageDependency[] {
   // Ensure no package is skipped if our traversal misses it
   for (const [path, pkg] of lockfile.dependencies.entries()) {
     if (!visited.has(path)) {
-      result.push({ ...pkg, trace: [pkg.name] });
+      result.push({ ...pkg, trace: ['unknown', pkg.name] });
     }
   }
 

@@ -4,6 +4,9 @@ export interface PackageDependency {
   resolved?: string;
   integrity?: string;
   dev?: boolean;
+  optional?: boolean;
+  peer?: boolean;
+  peerOptional?: boolean;
   dependencies?: Record<string, string>;
   trace?: string[];
 }
@@ -25,12 +28,44 @@ export type AntiPatternCategory =
 
 export interface Finding {
   category: AntiPatternCategory;
-  patternName: string;
-  severity: 'High' | 'Medium' | 'Low';
-  description: string;
+  id: string;
+  severity: string;
   isoControl: string;
+  packageName?: string;
+  packageVersion?: string;
+  summary?: string;
+  details?: string;
+  weakage?: any;
   location?: string;
-  trace?: string[];
+  traces?: string[][];
+  cvss?: {
+    score: number;
+    vectorString: string;
+  };
+  cwe?: string[];
+  aliases?: string[];
+  isDirect?: boolean;
+  fixAvailable: boolean;
+  url?: string;
+}
+
+export interface ReportMetadata {
+  vulnerabilities: {
+    info: number;
+    low: number;
+    moderate: number;
+    high: number;
+    critical: number;
+    total: number;
+  };
+  dependencies: {
+    prod: number;
+    dev: number;
+    optional?: number;
+    peer?: number;
+    peerOptional?: number;
+    total: number;
+  };
 }
 
 export interface SecurityReport {
@@ -39,6 +74,7 @@ export interface SecurityReport {
   totalDependencies: number;
   directDependenciesCount: number;
   transitiveDependenciesCount: number;
+  metadata?: ReportMetadata;
   vulnerabilities: Finding[];
   abandonedPackages: Finding[];
   codeAntiPatterns: Finding[];

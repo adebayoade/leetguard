@@ -22,10 +22,10 @@ describe('LockfileParser', () => {
 
     // Validate dependencies were extracted properly
     expect(lockfile?.dependencies.size).toBe(2);
-    expect(lockfile?.dependencies.has('chalk')).toBe(true);
-    expect(lockfile?.dependencies.has('commander')).toBe(true);
+    expect(lockfile?.dependencies.has('node_modules/chalk')).toBe(true);
+    expect(lockfile?.dependencies.has('node_modules/commander')).toBe(true);
 
-    const chalkPkg = lockfile?.dependencies.get('chalk');
+    const chalkPkg = lockfile?.dependencies.get('node_modules/chalk');
     expect(chalkPkg?.version).toBe('4.1.2');
     expect(chalkPkg?.name).toBe('chalk');
   });

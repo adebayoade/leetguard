@@ -17,9 +17,16 @@ export function generateHtmlReport(report: SecurityReport): void {
   const reportId = `NCR-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
   const date = new Date(report.timestamp).toISOString().split('T')[0];
 
-  const majors = allFindings.filter((f) => f.severity === 'High').length;
-  const minors = allFindings.filter((f) => f.severity === 'Medium').length;
-  const observations = allFindings.filter((f) => f.severity === 'Low').length;
+  const majors = allFindings.filter(
+    (f) => f.severity?.toUpperCase() === 'HIGH' || f.severity?.toUpperCase() === 'CRITICAL',
+  ).length;
+  const minors = allFindings.filter(
+    (f) => f.severity?.toUpperCase() === 'MEDIUM' || f.severity?.toUpperCase() === 'MODERATE',
+  ).length;
+  const observations = allFindings.filter(
+    (f) =>
+      f.severity?.toUpperCase() === 'LOW' || f.severity?.toUpperCase() === 'INFO' || !f.severity,
+  ).length;
 
   const html = `
 <!DOCTYPE html>
@@ -178,16 +185,26 @@ export function generateHtmlReport(report: SecurityReport): void {
         ${allFindings
           .map((f, index) => {
             const findingId = `${reportId}-${String(index + 1).padStart(3, '0')}`;
+            const sev = f.severity?.toUpperCase() || 'LOW';
             const ncrType =
-              f.severity === 'High'
+              sev === 'HIGH' || sev === 'CRITICAL'
                 ? 'MAJOR NON-CONFORMITY'
-                : f.severity === 'Medium'
+                : sev === 'MEDIUM' || sev === 'MODERATE'
                   ? 'MINOR NON-CONFORMITY'
                   : 'OBSERVATION';
 
-            let evidence = 'Identified in project configuration/dependencies.';
-            if (f.trace && f.trace.length > 0) {
-              evidence = `Dependency Trace: <span class="trace">root ➔ ${f.trace.join(' ➔ ')}</span>`;
+            let evidence = 'None';
+            if (f.traces && f.traces.length > 0) {
+              const maxTraces = Math.min(f.traces.length, 5);
+              const traceHtml = f.traces
+                .slice(0, maxTraces)
+                .map((t) => `<span class="trace">root ➔ ${t.join(' ➔ ')}</span>`)
+                .join('<br/>');
+              const moreHtml =
+                f.traces.length > 5
+                  ? `<br/><span class="trace">... and ${f.traces.length - 5} more paths</span>`
+                  : '';
+              evidence = `Dependency Traces:<br/>${traceHtml}${moreHtml}`;
             } else if (f.location) {
               evidence = `Source Code Location: <span class="trace">${f.location}</span>`;
             }
@@ -209,7 +226,16 @@ export function generateHtmlReport(report: SecurityReport): void {
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Description of Non-Conformity</div>
-                    <div class="ncr-value">${f.description} (${f.patternName})</div>
+                    <div class="ncr-value">
+                        ${f.summary ? `<strong>Summary:</strong> ${f.summary}<br/>` : ''}
+                        <strong>Vulnerability ID:</strong> ${f.id}<br/>
+                        ${f.packageName ? `<strong>Package:</strong> ${f.packageName}<br/>` : ''}
+                        ${f.packageVersion ? `<strong>Version:</strong> ${f.packageVersion}<br/>` : ''}
+                        <strong>Severity:</strong> ${f.severity}<br/>
+                        ${f.aliases && f.aliases.length > 0 ? `<strong>CVE ID:</strong> ${f.aliases.join(', ')}<br/>` : ''}
+                        ${f.cvss ? `<strong>CVSS Score:</strong> ${f.cvss.score} (${f.cvss.vectorString})<br/>` : ''}
+                        ${f.url ? `<strong>URL:</strong> <a href="${f.url}" target="_blank">${f.url}</a>` : ''}
+                    </div>
                 </div>
                 <div class="ncr-row">
                     <div class="ncr-label">Objective Evidence</div>

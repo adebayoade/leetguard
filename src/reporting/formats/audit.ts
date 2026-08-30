@@ -31,9 +31,16 @@ export function generateAuditReport(report: SecurityReport): void {
     return;
   }
 
-  const majors = allFindings.filter((f) => f.severity === 'High').length;
-  const minors = allFindings.filter((f) => f.severity === 'Medium').length;
-  const observations = allFindings.filter((f) => f.severity === 'Low').length;
+  const majors = allFindings.filter(
+    (f) => f.severity?.toUpperCase() === 'HIGH' || f.severity?.toUpperCase() === 'CRITICAL',
+  ).length;
+  const minors = allFindings.filter(
+    (f) => f.severity?.toUpperCase() === 'MEDIUM' || f.severity?.toUpperCase() === 'MODERATE',
+  ).length;
+  const observations = allFindings.filter(
+    (f) =>
+      f.severity?.toUpperCase() === 'LOW' || f.severity?.toUpperCase() === 'INFO' || !f.severity,
+  ).length;
 
   console.log(chalk.bold(`\n>> AUDIT SUMMARY:`));
   console.log(chalk.red(`  Major Non-Conformities (High Severity): ${majors}`));
@@ -43,25 +50,55 @@ export function generateAuditReport(report: SecurityReport): void {
 
   allFindings.forEach((f, index) => {
     const findingId = `${reportId}-${String(index + 1).padStart(3, '0')}`;
+    const sev = f.severity?.toUpperCase() || 'LOW';
     const ncrType =
-      f.severity === 'High'
+      sev === 'HIGH' || sev === 'CRITICAL'
         ? 'MAJOR NON-CONFORMITY'
-        : f.severity === 'Medium'
+        : sev === 'MEDIUM' || sev === 'MODERATE'
           ? 'MINOR NON-CONFORMITY'
           : 'OBSERVATION';
 
     const color =
-      f.severity === 'High' ? chalk.red : f.severity === 'Medium' ? chalk.yellow : chalk.cyan;
+      sev === 'HIGH' || sev === 'CRITICAL'
+        ? chalk.red
+        : sev === 'MEDIUM' || sev === 'MODERATE'
+          ? chalk.yellow
+          : chalk.cyan;
 
     console.log(color.bold(`Finding ID: ${findingId} [${ncrType}]`));
     console.log(chalk.bold(`ISO 27001 Control Ref: `) + f.isoControl);
     console.log(chalk.bold(`Category: `) + f.category);
     console.log(chalk.bold(`Description of Non-Conformity: `));
-    console.log(`  ${f.description} (${f.patternName})`);
+    if (f.summary) {
+      console.log(`  Summary: ${f.summary}`);
+    }
+    console.log(`  Vulnerability ID: ${f.id}`);
+    if (f.packageName) {
+      console.log(`  Package: ${f.packageName}`);
+    }
+    if (f.packageVersion) {
+      console.log(`  Version: ${f.packageVersion}`);
+    }
+    console.log(`  Severity: ${f.severity}`);
+    if (f.aliases && f.aliases.length > 0) {
+      console.log(`  CVE ID: ${f.aliases.join(', ')}`);
+    }
+    if (f.cvss) {
+      console.log(`  CVSS Score: ${f.cvss.score} (${f.cvss.vectorString})`);
+    }
+    if (f.url) {
+      console.log(`  URL: ${f.url}`);
+    }
 
     console.log(chalk.bold(`Objective Evidence: `));
-    if (f.trace && f.trace.length > 0) {
-      console.log(`  Dependency Trace: root ➔ ${f.trace.join(' ➔ ')}`);
+    if (f.traces && f.traces.length > 0) {
+      const maxTraces = Math.min(f.traces.length, 5);
+      for (let i = 0; i < maxTraces; i++) {
+        console.log(`  Dependency Trace: root ➔ ${f.traces[i].join(' ➔ ')}`);
+      }
+      if (f.traces.length > 5) {
+        console.log(`  ... and ${f.traces.length - 5} more paths`);
+      }
     } else if (f.location) {
       console.log(`  Source Code Location: ${f.location}`);
     } else {
