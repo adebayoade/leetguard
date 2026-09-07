@@ -17,6 +17,7 @@ import { checkAbandonedPackages } from './intelligence/abandonment/npm-registry.
 import { scanSourceCode } from './intelligence/scanner/ast-scanner.js';
 import { select } from '@inquirer/prompts';
 import { logger } from './core/logger.js';
+import { clearExpiredCache } from './core/cache.js';
 
 // Workaround for __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -63,6 +64,10 @@ program
     }
 
     logger.log(chalk.bold(`LeetGuard v${pkg.version}  |  Scanning project...`));
+
+    // Prune expired cache entries (including any left unreachable by a past
+    // cache schema bump) so the cache file doesn't grow unbounded over time
+    clearExpiredCache();
 
     // Layer 2: Core Engine
     const lockfile = parseLockfile(dir);
