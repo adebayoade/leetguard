@@ -10,6 +10,25 @@ export interface CacheEntry<T> {
 const cacheDir = join(homedir(), '.leetguard');
 const cacheFilePath = join(cacheDir, 'cache.json');
 
+// Bump this whenever the shape of cached data (e.g. the Finding interface)
+// changes. The cache file is shared across every version of the tool ever
+// run on a machine, so without this an upgrade that changes a cached shape
+// (e.g. Finding) can silently resurrect old-shaped entries within their TTL,
+// producing a report that mixes two incompatible schemas.
+const CACHE_SCHEMA_VERSION = 2;
+
+/**
+ * Namespaces a cache key with the current schema version, so a version bump
+ * makes previously cached entries unreachable instead of being returned with
+ * a stale, incompatible shape.
+ *
+ * @param key - The unversioned cache key.
+ * @returns The key namespaced with the current cache schema version.
+ */
+export function versionedCacheKey(key: string): string {
+  return `v${CACHE_SCHEMA_VERSION}_${key}`;
+}
+
 /**
  * Ensures that the cache directory and cache file exist.
  * Creates them if they are missing.

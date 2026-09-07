@@ -234,6 +234,7 @@ export function generateHtmlReport(report: SecurityReport): void {
                         <strong>Severity:</strong> ${f.severity}<br/>
                         ${f.aliases && f.aliases.length > 0 ? `<strong>CVE ID:</strong> ${f.aliases.join(', ')}<br/>` : ''}
                         ${f.cvss ? `<strong>CVSS Score:</strong> ${f.cvss.score} (${f.cvss.vectorString})<br/>` : ''}
+                        ${f.fixedVersions && f.fixedVersions.length > 0 ? `<strong>Recommended Fix:</strong> Upgrade to ${f.fixedVersions.join(' or ')}<br/>` : ''}
                         ${f.url ? `<strong>URL:</strong> <a href="${f.url}" target="_blank">${f.url}</a>` : ''}
                     </div>
                 </div>

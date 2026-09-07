@@ -126,7 +126,10 @@ export function generateTextReport(report: SecurityReport): void {
       const pkgStr = f.packageName ? chalk.gray(f.packageName) : '';
       const idPkg = [f.id, pkgStr].filter(Boolean).join('\n');
 
-      const summary = f.summary || f.details || '';
+      let summary = f.summary || f.details || '';
+      if (f.fixedVersions && f.fixedVersions.length > 0) {
+        summary += `\n${chalk.green(`Fix: upgrade to ${f.fixedVersions.join(' or ')}`)}`;
+      }
 
       let traceStr = '';
       if (f.traces && f.traces.length > 0) {

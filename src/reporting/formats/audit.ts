@@ -86,6 +86,9 @@ export function generateAuditReport(report: SecurityReport): void {
     if (f.cvss) {
       console.log(`  CVSS Score: ${f.cvss.score} (${f.cvss.vectorString})`);
     }
+    if (f.fixedVersions && f.fixedVersions.length > 0) {
+      console.log(`  Recommended Fix: Upgrade to ${f.fixedVersions.join(' or ')}`);
+    }
     if (f.url) {
       console.log(`  URL: ${f.url}`);
     }

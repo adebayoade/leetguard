@@ -1,6 +1,6 @@
 import { Finding } from '../../types/index.js';
 import { getIsoControl } from '../iso-mapper.js';
-import { getCache, setCache } from '../../core/cache.js';
+import { getCache, setCache, versionedCacheKey } from '../../core/cache.js';
 import chalk from 'chalk';
 import { logger } from '../../core/logger.js';
 
@@ -20,7 +20,7 @@ export async function checkAbandonedPackages(directDependencies: string[]): Prom
   const uncachedPackages: string[] = [];
 
   for (const pkgName of directDependencies) {
-    const cacheKey = `npm_${pkgName}`;
+    const cacheKey = versionedCacheKey(`npm_${pkgName}`);
     const cachedFindings = getCache<Finding[]>(cacheKey);
     if (cachedFindings !== null) {
       findings.push(...cachedFindings);
@@ -52,7 +52,7 @@ export async function checkAbandonedPackages(directDependencies: string[]): Prom
 
     await Promise.all(
       chunk.map(async (pkgName) => {
-        const cacheKey = `npm_${pkgName}`;
+        const cacheKey = versionedCacheKey(`npm_${pkgName}`);
         const pkgFindings: Finding[] = [];
 
         try {

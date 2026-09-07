@@ -46,6 +46,7 @@ export interface Finding {
   aliases?: string[];
   isDirect?: boolean;
   fixAvailable: boolean;
+  fixedVersions?: string[];
   url?: string;
 }
 

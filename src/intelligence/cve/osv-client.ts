@@ -1,7 +1,7 @@
 import { Finding, PackageDependency } from '../../types/index.js';
 import { CVE_ISO_CONTROL } from '../iso-mapper.js';
 
-import { getCache, setCache } from '../../core/cache.js';
+import { getCache, setCache, versionedCacheKey } from '../../core/cache.js';
 import chalk from 'chalk';
 import { logger } from '../../core/logger.js';
 import Cvss from 'cvss-calculator';
@@ -25,7 +25,7 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
 
   // Check cache first
   for (const pkg of dependencies) {
-    const cacheKey = `osv_${pkg.name}@${pkg.version}`;
+    const cacheKey = versionedCacheKey(`osv_${pkg.name}@${pkg.version}`);
     const cachedFindings = getCache<Finding[]>(cacheKey);
 
     if (cachedFindings !== null) {
@@ -116,28 +116,31 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
       // The results array matches the queries array index
       data.results?.forEach((result: any, index: number) => {
         const pkg = chunkDeps[index];
-        const cacheKey = `osv_${pkg.name}@${pkg.version}`;
+        const cacheKey = versionedCacheKey(`osv_${pkg.name}@${pkg.version}`);
         const packageFindings: Finding[] = [];
 
         if (result.vulns && result.vulns.length > 0) {
           result.vulns.forEach((stubVuln: any) => {
             const vuln = fullVulnsMap[stubVuln.id] || stubVuln;
 
-            // Check for available fixes in affected ranges
-            let hasFix = false;
+            // Check for available fixes in affected ranges, capturing the
+            // actual fixed version string(s) rather than just a boolean flag
+            const fixedVersionsSet = new Set<string>();
             if (vuln.affected) {
               for (const affected of vuln.affected) {
                 if (affected.ranges) {
                   for (const range of affected.ranges) {
                     if (range.events) {
                       for (const event of range.events) {
-                        if (event.fixed) hasFix = true;
+                        if (event.fixed) fixedVersionsSet.add(event.fixed);
                       }
                     }
                   }
                 }
               }
             }
+            const fixedVersions = Array.from(fixedVersionsSet);
+            const hasFix = fixedVersions.length > 0;
 
             // Extract CVSS vector if present
             let cvssObj = undefined;
@@ -174,6 +177,7 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
               severity: extractedSeverity,
               isoControl: CVE_ISO_CONTROL,
               fixAvailable: hasFix,
+              fixedVersions: hasFix ? fixedVersions : undefined,
               cvss: cvssObj,
               cwe: cweIds,
               aliases,
