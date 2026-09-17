@@ -88,7 +88,7 @@ program
       directDeps = Object.keys(pkgJson.dependencies || {}).concat(
         Object.keys(pkgJson.devDependencies || {}),
       );
-    } catch (e) {
+    } catch {
       console.warn(
         chalk.yellow(`Could not read package.json in ${dir}. Skipping abandonment checks.`),
       );
@@ -131,8 +131,6 @@ program
       low: 1,
       info: 0,
     };
-    const sevNames = ['info', 'low', 'moderate', 'high', 'critical'];
-
     vulnerabilities.forEach((v) => {
       const sevStr = (v.severity || '').toLowerCase();
       const weight = sevWeight[sevStr] ?? -1;

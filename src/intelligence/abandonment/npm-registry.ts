@@ -89,7 +89,7 @@ export async function checkAbandonedPackages(directDependencies: string[]): Prom
 
           setCache(cacheKey, pkgFindings, 24);
           findings.push(...pkgFindings);
-        } catch (error) {
+        } catch {
           // Silent catch to prevent one failed network request from crashing the tool
           // Don't cache hard network errors, so we retry next time
         }

@@ -16,7 +16,7 @@ describe('checkAbandonedPackages', () => {
       json: async () => ({
         time: { modified: '2023-01-01T00:00:00Z' }, // 3+ years old
       }),
-    } as any);
+    });
 
     const findings = await checkAbandonedPackages(['old-package']);
     expect(findings.length).toBe(1);
@@ -35,7 +35,7 @@ describe('checkAbandonedPackages', () => {
       json: async () => ({
         time: { modified: '2026-01-01T00:00:00Z' }, // < 1 year old
       }),
-    } as any);
+    });
 
     const findings = await checkAbandonedPackages(['fresh-package']);
     expect(findings.length).toBe(0);

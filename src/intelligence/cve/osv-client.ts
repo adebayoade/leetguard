@@ -8,6 +8,45 @@ import Cvss from 'cvss-calculator';
 
 const OSV_BATCH_URL = 'https://api.osv.dev/v1/querybatch';
 
+interface OsvEvent {
+  fixed?: string;
+}
+
+interface OsvRange {
+  events?: OsvEvent[];
+}
+
+interface OsvAffected {
+  ranges?: OsvRange[];
+}
+
+interface OsvSeverityEntry {
+  type: string;
+  score: string;
+}
+
+/** A vulnerability as returned by either the batch stub or the full vuln-detail endpoint. */
+interface OsvVulnerability {
+  id: string;
+  summary?: string;
+  details?: string;
+  aliases?: string[];
+  severity?: OsvSeverityEntry[];
+  affected?: OsvAffected[];
+  database_specific?: {
+    severity?: string;
+    cwe_ids?: string[];
+  };
+}
+
+interface OsvBatchResultEntry {
+  vulns?: OsvVulnerability[];
+}
+
+interface OsvBatchResponse {
+  results?: OsvBatchResultEntry[];
+}
+
 /**
  * Queries the Open Source Vulnerability (OSV) database for known CVEs
  * across a list of package dependencies.
@@ -86,24 +125,24 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
         continue;
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as OsvBatchResponse;
 
       // Collect all unique vuln IDs to fetch full details
       const vulnIdsToFetch = new Set<string>();
-      data.results?.forEach((result: any) => {
+      data.results?.forEach((result) => {
         if (result.vulns) {
-          result.vulns.forEach((v: any) => vulnIdsToFetch.add(v.id));
+          result.vulns.forEach((v) => vulnIdsToFetch.add(v.id));
         }
       });
 
       // Fetch full details for these vulns
-      const fullVulnsMap: Record<string, any> = {};
+      const fullVulnsMap: Record<string, OsvVulnerability> = {};
       if (vulnIdsToFetch.size > 0) {
         const fetchPromises = Array.from(vulnIdsToFetch).map(async (id) => {
           try {
             const res = await fetch(`https://api.osv.dev/v1/vulns/${id}`);
             if (res.ok) {
-              const vulnData = await res.json();
+              const vulnData = (await res.json()) as OsvVulnerability;
               fullVulnsMap[id] = vulnData;
             }
           } catch (e) {
@@ -114,13 +153,13 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
       }
 
       // The results array matches the queries array index
-      data.results?.forEach((result: any, index: number) => {
+      data.results?.forEach((result, index) => {
         const pkg = chunkDeps[index];
         const cacheKey = versionedCacheKey(`osv_${pkg.name}@${pkg.version}`);
         const packageFindings: Finding[] = [];
 
         if (result.vulns && result.vulns.length > 0) {
-          result.vulns.forEach((stubVuln: any) => {
+          result.vulns.forEach((stubVuln) => {
             const vuln = fullVulnsMap[stubVuln.id] || stubVuln;
 
             // Check for available fixes in affected ranges, capturing the
@@ -145,7 +184,7 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
             // Extract CVSS vector if present
             let cvssObj = undefined;
             if (vuln.severity && Array.isArray(vuln.severity)) {
-              const cvssV3 = vuln.severity.find((s: any) => s.type === 'CVSS_V3');
+              const cvssV3 = vuln.severity.find((s) => s.type === 'CVSS_V3');
               if (cvssV3) {
                 let score = 0;
                 try {
@@ -154,7 +193,7 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
                   if (typeof baseScore === 'number' && !isNaN(baseScore)) {
                     score = baseScore;
                   }
-                } catch (e) {
+                } catch {
                   // Fallback to 0 if parsing fails
                 }
                 cvssObj = { score, vectorString: cvssV3.score };
@@ -162,9 +201,9 @@ export async function lookupCveBatch(dependencies: PackageDependency[]): Promise
             }
 
             // Extract severity and CWE from database_specific
-            const dbSpecific = vuln.database_specific || {};
-            const extractedSeverity = dbSpecific.severity || 'Unknown';
-            const cweIds = dbSpecific.cwe_ids || [];
+            const dbSpecific = vuln.database_specific;
+            const extractedSeverity = dbSpecific?.severity || 'Unknown';
+            const cweIds = dbSpecific?.cwe_ids || [];
             const aliases = vuln.aliases || [];
 
             packageFindings.push({

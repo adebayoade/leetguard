@@ -123,11 +123,11 @@
         <table class="meta-table">
             <tr>
                 <td>Report ID</td>
-                <td>NCR-1F1AA65D</td>
+                <td>NCR-C8FAB1D8</td>
             </tr>
             <tr>
                 <td>Date of Audit</td>
-                <td>2026-08-30</td>
+                <td>2026-09-17</td>
             </tr>
             <tr>
                 <td>Audited System / Target</td>
@@ -135,15 +135,15 @@
             </tr>
             <tr>
                 <td>Total Dependencies Audited</td>
-                <td>1299</td>
+                <td>1331</td>
             </tr>
         </table>
 
         
         <div class="summary-box">
             <h2>Audit Summary</h2>
-            <p><strong>Major Non-Conformities (High Severity):</strong> <span style="color: #dc2626">27</span></p>
-            <p><strong>Minor Non-Conformities (Medium Severity):</strong> <span style="color: #d97706">14</span></p>
+            <p><strong>Major Non-Conformities (High Severity):</strong> <span style="color: #dc2626">37</span></p>
+            <p><strong>Minor Non-Conformities (Medium Severity):</strong> <span style="color: #d97706">20</span></p>
             <p><strong>Observations (Low Severity):</strong> <span style="color: #2563eb">2</span></p>
         </div>
 
@@ -151,7 +151,85 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-001</span>
+                <span>Finding ID: NCR-C8FAB1D8-001</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Browserslist: Uncaught crash / prototype write via untrusted browserslist-stats.json custom stats (normalizeStats)<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-73wf-gq98-2v4g<br/>
+                        <strong>Package:</strong> browserslist<br/>
+                        <strong>Version:</strong> 4.28.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-73088<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.28.7<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-73wf-gq98-2v4g" target="_blank">https://osv.dev/vulnerability/GHSA-73wf-gq98-2v4g</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ browserslist</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-002</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Browserslist: Unbounded memory growth (no cache eviction) via distinct query results, leading to eventual OOM<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-c83g-rgw3-j3cx<br/>
+                        <strong>Package:</strong> browserslist<br/>
+                        <strong>Version:</strong> 4.28.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-73089<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.28.7<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-c83g-rgw3-j3cx" target="_blank">https://osv.dev/vulnerability/GHSA-c83g-rgw3-j3cx</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ browserslist</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-003</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -173,6 +251,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-69153<br/>
                         
+                        <strong>Recommended Fix:</strong> Upgrade to 8.5.23<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp" target="_blank">https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp</a>
                     </div>
                 </div>
@@ -189,7 +268,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-002</span>
+                <span>Finding ID: NCR-C8FAB1D8-004</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -211,6 +290,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-73646<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 8.5.18<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849" target="_blank">https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849</a>
                     </div>
                 </div>
@@ -227,7 +307,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-003</span>
+                <span>Finding ID: NCR-C8FAB1D8-005</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -249,6 +329,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2025-30359<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.2.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4v9v-hfq4-rm2v" target="_blank">https://osv.dev/vulnerability/GHSA-4v9v-hfq4-rm2v</a>
                     </div>
                 </div>
@@ -265,7 +346,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-004</span>
+                <span>Finding ID: NCR-C8FAB1D8-006</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -287,6 +368,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-6402<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.2.4<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-79cf-xcqc-c78w" target="_blank">https://osv.dev/vulnerability/GHSA-79cf-xcqc-c78w</a>
                     </div>
                 </div>
@@ -303,7 +385,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-005</span>
+                <span>Finding ID: NCR-C8FAB1D8-007</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -325,6 +407,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2025-30360<br/>
                         <strong>CVSS Score:</strong> 6.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.2.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-9jgg-88mc-972h" target="_blank">https://osv.dev/vulnerability/GHSA-9jgg-88mc-972h</a>
                     </div>
                 </div>
@@ -341,7 +424,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-006</span>
+                <span>Finding ID: NCR-C8FAB1D8-008</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -363,6 +446,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-14620<br/>
                         <strong>CVSS Score:</strong> 4.7 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.2.6<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-f5vj-f2hx-8m93" target="_blank">https://osv.dev/vulnerability/GHSA-f5vj-f2hx-8m93</a>
                     </div>
                 </div>
@@ -379,7 +463,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-007</span>
+                <span>Finding ID: NCR-C8FAB1D8-009</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -401,6 +485,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-14631<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.2.6<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-m28w-2pqf-7qgj" target="_blank">https://osv.dev/vulnerability/GHSA-m28w-2pqf-7qgj</a>
                     </div>
                 </div>
@@ -417,7 +502,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-008</span>
+                <span>Finding ID: NCR-C8FAB1D8-010</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -439,6 +524,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-9595<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.2.5<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-mx8g-39q3-5c79" target="_blank">https://osv.dev/vulnerability/GHSA-mx8g-39q3-5c79</a>
                     </div>
                 </div>
@@ -455,7 +541,46 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-009</span>
+                <span>Finding ID: NCR-C8FAB1D8-011</span>
+                <span>[MINOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> baseline-browser-mapping process termination on invalid input causes denial of service<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-w5vr-8v7q-w6rv<br/>
+                        <strong>Package:</strong> baseline-browser-mapping<br/>
+                        <strong>Version:</strong> 2.10.37<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-45819<br/>
+                        
+                        <strong>Recommended Fix:</strong> Upgrade to 2.11.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-w5vr-8v7q-w6rv" target="_blank">https://osv.dev/vulnerability/GHSA-w5vr-8v7q-w6rv</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ browserslist ➔ baseline-browser-mapping</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-012</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -477,6 +602,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         
                         <strong>CVSS Score:</strong> 8.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 7.0.3<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq" target="_blank">https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq</a>
                     </div>
                 </div>
@@ -493,7 +619,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-010</span>
+                <span>Finding ID: NCR-C8FAB1D8-013</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -515,6 +641,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-34043<br/>
                         <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 7.0.5<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-qj8w-gfj5-8c6v" target="_blank">https://osv.dev/vulnerability/GHSA-qj8w-gfj5-8c6v</a>
                     </div>
                 </div>
@@ -531,7 +658,46 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-011</span>
+                <span>Finding ID: NCR-C8FAB1D8-014</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2883-xcg3-v3hh<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 4.2.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84375<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.3.2 or 3.15.2<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh" target="_blank">https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-015</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -553,6 +719,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-59869<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 3.15.0 or 4.3.0<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m" target="_blank">https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m</a>
                     </div>
                 </div>
@@ -569,7 +736,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-012</span>
+                <span>Finding ID: NCR-C8FAB1D8-016</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -591,6 +758,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.3.1 or 3.15.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj" target="_blank">https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj</a>
                     </div>
                 </div>
@@ -607,7 +775,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-013</span>
+                <span>Finding ID: NCR-C8FAB1D8-017</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -629,6 +797,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-67214<br/>
                         <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 3.3.16 or 5.1.16<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-28wg-ghj8-5hjv" target="_blank">https://osv.dev/vulnerability/GHSA-28wg-ghj8-5hjv</a>
                     </div>
                 </div>
@@ -645,7 +814,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-014</span>
+                <span>Finding ID: NCR-C8FAB1D8-018</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -667,6 +836,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-67213<br/>
                         <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 3.3.18 or 5.1.6<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2v37-7h3g-55p8" target="_blank">https://osv.dev/vulnerability/GHSA-2v37-7h3g-55p8</a>
                     </div>
                 </div>
@@ -683,7 +853,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-015</span>
+                <span>Finding ID: NCR-C8FAB1D8-019</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -705,6 +875,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-13311<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 1.9.0<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-395f-4hp3-45gv" target="_blank">https://osv.dev/vulnerability/GHSA-395f-4hp3-45gv</a>
                     </div>
                 </div>
@@ -721,7 +892,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-016</span>
+                <span>Finding ID: NCR-C8FAB1D8-020</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -743,6 +914,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-45623<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 8.5.12<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-6g55-p6wh-862q" target="_blank">https://osv.dev/vulnerability/GHSA-6g55-p6wh-862q</a>
                     </div>
                 </div>
@@ -759,7 +931,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-017</span>
+                <span>Finding ID: NCR-C8FAB1D8-021</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -781,6 +953,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2023-44270<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 8.4.31<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-7fh5-64p2-3v2j" target="_blank">https://osv.dev/vulnerability/GHSA-7fh5-64p2-3v2j</a>
                     </div>
                 </div>
@@ -797,7 +970,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-018</span>
+                <span>Finding ID: NCR-C8FAB1D8-022</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -819,6 +992,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-69153<br/>
                         
+                        <strong>Recommended Fix:</strong> Upgrade to 8.5.23<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp" target="_blank">https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp</a>
                     </div>
                 </div>
@@ -835,7 +1009,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-019</span>
+                <span>Finding ID: NCR-C8FAB1D8-023</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -857,6 +1031,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-41305<br/>
                         <strong>CVSS Score:</strong> 6.1 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 8.5.10<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-qx2v-qp2m-jg93" target="_blank">https://osv.dev/vulnerability/GHSA-qx2v-qp2m-jg93</a>
                     </div>
                 </div>
@@ -873,7 +1048,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-020</span>
+                <span>Finding ID: NCR-C8FAB1D8-024</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -895,6 +1070,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-73646<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 8.5.18<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849" target="_blank">https://osv.dev/vulnerability/GHSA-r28c-9q8g-f849</a>
                     </div>
                 </div>
@@ -911,7 +1087,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-021</span>
+                <span>Finding ID: NCR-C8FAB1D8-025</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -933,6 +1109,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-55602<br/>
                         
+                        <strong>Recommended Fix:</strong> Upgrade to 3.0.6 or 4.1.0 or 2.0.10<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-64mm-vxmg-q3vj" target="_blank">https://osv.dev/vulnerability/GHSA-64mm-vxmg-q3vj</a>
                     </div>
                 </div>
@@ -949,7 +1126,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-022</span>
+                <span>Finding ID: NCR-C8FAB1D8-026</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -971,6 +1148,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-73650<br/>
                         <strong>CVSS Score:</strong> 8.2 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.8.3 or 3.3.4 or 4.0.2<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545" target="_blank">https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545</a>
                     </div>
                 </div>
@@ -987,7 +1165,85 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-023</span>
+                <span>Finding ID: NCR-C8FAB1D8-027</span>
+                <span>[MINOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> SVGO: removeScripts incompletely sanitizes executable HTML in SVG foreignObject elements<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-4vpr-x523-8j87<br/>
+                        <strong>Package:</strong> svgo<br/>
+                        <strong>Version:</strong> 1.3.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84369<br/>
+                        <strong>CVSS Score:</strong> 6.1 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.8.4 or 3.3.5 or 4.1.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4vpr-x523-8j87" target="_blank">https://osv.dev/vulnerability/GHSA-4vpr-x523-8j87</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-028</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> SVGO: removeScripts allows executable links through namespace and control-character bypasses<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-w27v-7q3p-w38r<br/>
+                        <strong>Package:</strong> svgo<br/>
+                        <strong>Version:</strong> 1.3.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84370<br/>
+                        <strong>CVSS Score:</strong> 8.2 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.8.4 or 3.3.5 or 4.1.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-w27v-7q3p-w38r" target="_blank">https://osv.dev/vulnerability/GHSA-w27v-7q3p-w38r</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-029</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1009,6 +1265,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-27601<br/>
                         <strong>CVSS Score:</strong> 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 1.13.8<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-qpx9-hpmf-5gmw" target="_blank">https://osv.dev/vulnerability/GHSA-qpx9-hpmf-5gmw</a>
                     </div>
                 </div>
@@ -1025,7 +1282,46 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-024</span>
+                <span>Finding ID: NCR-C8FAB1D8-030</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2883-xcg3-v3hh<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 4.2.0<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84375<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.3.2 or 3.15.2<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh" target="_blank">https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ eslint ➔ @eslint/eslintrc ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-031</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1047,6 +1343,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-59869<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 3.15.0 or 4.3.0<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m" target="_blank">https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m</a>
                     </div>
                 </div>
@@ -1063,7 +1360,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-025</span>
+                <span>Finding ID: NCR-C8FAB1D8-032</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1085,6 +1382,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.3.1 or 3.15.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj" target="_blank">https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj</a>
                     </div>
                 </div>
@@ -1101,7 +1399,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-026</span>
+                <span>Finding ID: NCR-C8FAB1D8-033</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1123,6 +1421,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-13149<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.0.7 or 1.1.16 or 2.1.2<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp" target="_blank">https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp</a>
                     </div>
                 </div>
@@ -1139,7 +1438,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-027</span>
+                <span>Finding ID: NCR-C8FAB1D8-034</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1161,6 +1460,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-14257<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.0.8 or 3.0.3 or 2.1.3 or 1.1.17<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg" target="_blank">https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg</a>
                     </div>
                 </div>
@@ -1177,7 +1477,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-028</span>
+                <span>Finding ID: NCR-C8FAB1D8-035</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1199,6 +1499,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-69152<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 1.1.18 or 2.1.4 or 3.0.6 or 5.0.9<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895" target="_blank">https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895</a>
                     </div>
                 </div>
@@ -1215,7 +1516,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-029</span>
+                <span>Finding ID: NCR-C8FAB1D8-036</span>
                 <span>[OBSERVATION]</span>
             </div>
             <div class="ncr-body">
@@ -1237,6 +1538,7 @@
                         <strong>Severity:</strong> LOW<br/>
                         <strong>CVE ID:</strong> CVE-2026-12590<br/>
                         <strong>CVSS Score:</strong> 3.7 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 1.20.6 or 2.3.0<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-v422-hmwv-36x6" target="_blank">https://osv.dev/vulnerability/GHSA-v422-hmwv-36x6</a>
                     </div>
                 </div>
@@ -1253,7 +1555,85 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-030</span>
+                <span>Finding ID: NCR-C8FAB1D8-037</span>
+                <span>[MINOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> qs: Denial of Service via Attacker Controlled isBuffer<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-4mjr-xmp4-gh2g<br/>
+                        <strong>Package:</strong> qs<br/>
+                        <strong>Version:</strong> 6.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-82417<br/>
+                        <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 6.16.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4mjr-xmp4-gh2g" target="_blank">https://osv.dev/vulnerability/GHSA-4mjr-xmp4-gh2g</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ express ➔ qs</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-038</span>
+                <span>[MINOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> qs array-limit bypass via bracket-key comma parsing<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-x5fp-wj9c-mxmx<br/>
+                        <strong>Package:</strong> qs<br/>
+                        <strong>Version:</strong> 6.15.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-82562<br/>
+                        <strong>CVSS Score:</strong> 3.7 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 6.16.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-x5fp-wj9c-mxmx" target="_blank">https://osv.dev/vulnerability/GHSA-x5fp-wj9c-mxmx</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ webpack-dev-server ➔ express ➔ qs</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-039</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1275,6 +1655,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-41907, CVE-2026-41988<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 11.1.1 or 12.0.1 or 13.0.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-w5hq-g745-h8pq" target="_blank">https://osv.dev/vulnerability/GHSA-w5hq-g745-h8pq</a>
                     </div>
                 </div>
@@ -1291,7 +1672,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-031</span>
+                <span>Finding ID: NCR-C8FAB1D8-040</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1313,6 +1694,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-13676<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.0.1 or 3.1.3 or 2.4.2<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4c8g-83qw-93j6" target="_blank">https://osv.dev/vulnerability/GHSA-4c8g-83qw-93j6</a>
                     </div>
                 </div>
@@ -1329,7 +1711,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-032</span>
+                <span>Finding ID: NCR-C8FAB1D8-041</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1351,6 +1733,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-18446<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.4.4 or 3.1.5 or 4.1.2<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-7p8r-x3mc-p8w7" target="_blank">https://osv.dev/vulnerability/GHSA-7p8r-x3mc-p8w7</a>
                     </div>
                 </div>
@@ -1367,7 +1750,124 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-033</span>
+                <span>Finding ID: NCR-C8FAB1D8-042</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> fast-uri vulnerable to server-side request forgery via malformed IPv6 normalization<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-f65p-4m7j-42xc<br/>
+                        <strong>Package:</strong> fast-uri<br/>
+                        <strong>Version:</strong> 3.1.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-75975<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.4.5 or 3.1.6 or 4.1.3<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-f65p-4m7j-42xc" target="_blank">https://osv.dev/vulnerability/GHSA-f65p-4m7j-42xc</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-043</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> fast-uri vulnerable to server-side request forgery via repeated hostname percent-decoding<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-fph4-wmhf-6fwf<br/>
+                        <strong>Package:</strong> fast-uri<br/>
+                        <strong>Version:</strong> 3.1.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-75899<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.4.5 or 3.1.6 or 4.1.3<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-fph4-wmhf-6fwf" target="_blank">https://osv.dev/vulnerability/GHSA-fph4-wmhf-6fwf</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-044</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> fast-uri vulnerable to host confusion via percent-encoded scheme normalization<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-jqff-g426-hqxp<br/>
+                        <strong>Package:</strong> fast-uri<br/>
+                        <strong>Version:</strong> 3.1.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-76172<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.4.5 or 3.1.6 or 4.1.3<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-jqff-g426-hqxp" target="_blank">https://osv.dev/vulnerability/GHSA-jqff-g426-hqxp</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @pmmmwh/react-refresh-webpack-plugin ➔ schema-utils ➔ ajv ➔ fast-uri</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-045</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1389,6 +1889,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-16221<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.4.3 or 3.1.4 or 4.1.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-v2hh-gcrm-f6hx" target="_blank">https://osv.dev/vulnerability/GHSA-v2hh-gcrm-f6hx</a>
                     </div>
                 </div>
@@ -1405,7 +1906,46 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-034</span>
+                <span>Finding ID: NCR-C8FAB1D8-046</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2883-xcg3-v3hh<br/>
+                        <strong>Package:</strong> js-yaml<br/>
+                        <strong>Version:</strong> 3.14.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84375<br/>
+                        <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.3.2 or 3.15.2<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh" target="_blank">https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ @svgr/webpack ➔ @svgr/plugin-svgo ➔ svgo ➔ js-yaml</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-047</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1427,6 +1967,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-59869<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 3.15.0 or 4.3.0<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m" target="_blank">https://osv.dev/vulnerability/GHSA-52cp-r559-cp3m</a>
                     </div>
                 </div>
@@ -1443,7 +1984,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-035</span>
+                <span>Finding ID: NCR-C8FAB1D8-048</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1465,6 +2006,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.3.1 or 3.15.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj" target="_blank">https://osv.dev/vulnerability/GHSA-5p4m-2wfm-xmqj</a>
                     </div>
                 </div>
@@ -1481,7 +2023,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-036</span>
+                <span>Finding ID: NCR-C8FAB1D8-049</span>
                 <span>[MINOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1503,6 +2045,7 @@
                         <strong>Severity:</strong> MODERATE<br/>
                         <strong>CVE ID:</strong> CVE-2026-53550<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 4.2.0 or 3.15.0<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-h67p-54hq-rp68" target="_blank">https://osv.dev/vulnerability/GHSA-h67p-54hq-rp68</a>
                     </div>
                 </div>
@@ -1519,7 +2062,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-037</span>
+                <span>Finding ID: NCR-C8FAB1D8-050</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1541,6 +2084,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         
                         <strong>CVSS Score:</strong> 8.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 7.0.3<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq" target="_blank">https://osv.dev/vulnerability/GHSA-5c6j-r48x-rmvq</a>
                     </div>
                 </div>
@@ -1557,7 +2101,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-038</span>
+                <span>Finding ID: NCR-C8FAB1D8-051</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1579,6 +2123,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2021-3803<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.0.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-rp65-9cf3-cjxr" target="_blank">https://osv.dev/vulnerability/GHSA-rp65-9cf3-cjxr</a>
                     </div>
                 </div>
@@ -1595,7 +2140,46 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-039</span>
+                <span>Finding ID: NCR-C8FAB1D8-052</span>
+                <span>[MINOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> Colord: Slow rejection of oversized malformed color strings<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-2wm5-q62r-hmrv<br/>
+                        <strong>Package:</strong> colord<br/>
+                        <strong>Version:</strong> 2.9.3<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-85062<br/>
+                        
+                        <strong>Recommended Fix:</strong> Upgrade to 2.9.4<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2wm5-q62r-hmrv" target="_blank">https://osv.dev/vulnerability/GHSA-2wm5-q62r-hmrv</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ cssnano ➔ cssnano-preset-default ➔ postcss-colormin ➔ colord</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-053</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1617,6 +2201,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-73650<br/>
                         <strong>CVSS Score:</strong> 8.2 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.8.3 or 3.3.4 or 4.0.2<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545" target="_blank">https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545</a>
                     </div>
                 </div>
@@ -1633,7 +2218,85 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-040</span>
+                <span>Finding ID: NCR-C8FAB1D8-054</span>
+                <span>[MINOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> SVGO: removeScripts incompletely sanitizes executable HTML in SVG foreignObject elements<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-4vpr-x523-8j87<br/>
+                        <strong>Package:</strong> svgo<br/>
+                        <strong>Version:</strong> 2.8.2<br/>
+                        <strong>Severity:</strong> MODERATE<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84369<br/>
+                        <strong>CVSS Score:</strong> 6.1 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.8.4 or 3.3.5 or 4.1.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-4vpr-x523-8j87" target="_blank">https://osv.dev/vulnerability/GHSA-4vpr-x523-8j87</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ cssnano ➔ cssnano-preset-default ➔ postcss-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-055</span>
+                <span>[MAJOR NON-CONFORMITY]</span>
+            </div>
+            <div class="ncr-body">
+                <div class="ncr-row">
+                    <div class="ncr-label">ISO 27001 Control Ref</div>
+                    <div class="ncr-value"><strong>A.8.8 Management of technical vulnerabilities</strong></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Category</div>
+                    <div class="ncr-value">Injection & Dynamic Execution</div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Description of Non-Conformity</div>
+                    <div class="ncr-value">
+                        <strong>Summary:</strong> SVGO: removeScripts allows executable links through namespace and control-character bypasses<br/>
+                        <strong>Vulnerability ID:</strong> GHSA-w27v-7q3p-w38r<br/>
+                        <strong>Package:</strong> svgo<br/>
+                        <strong>Version:</strong> 2.8.2<br/>
+                        <strong>Severity:</strong> HIGH<br/>
+                        <strong>CVE ID:</strong> CVE-2026-84370<br/>
+                        <strong>CVSS Score:</strong> 8.2 (CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 2.8.4 or 3.3.5 or 4.1.0<br/>
+                        <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-w27v-7q3p-w38r" target="_blank">https://osv.dev/vulnerability/GHSA-w27v-7q3p-w38r</a>
+                    </div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Objective Evidence</div>
+                    <div class="ncr-value">Dependency Traces:<br/><span class="trace">root ➔ react-scripts ➔ css-minimizer-webpack-plugin ➔ cssnano ➔ cssnano-preset-default ➔ postcss-svgo ➔ svgo</span></div>
+                </div>
+                <div class="ncr-row">
+                    <div class="ncr-label">Corrective Action Required</div>
+                    <div class="ncr-value"><strong>Yes</strong></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ncr-card">
+            <div class="ncr-header">
+                <span>Finding ID: NCR-C8FAB1D8-056</span>
                 <span>[OBSERVATION]</span>
             </div>
             <div class="ncr-body">
@@ -1655,6 +2318,7 @@
                         <strong>Severity:</strong> LOW<br/>
                         <strong>CVE ID:</strong> CVE-2026-3449<br/>
                         <strong>CVSS Score:</strong> 3.3 (CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 3.0.1 or 2.0.1<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-vpq2-c234-7xj6" target="_blank">https://osv.dev/vulnerability/GHSA-vpq2-c234-7xj6</a>
                     </div>
                 </div>
@@ -1671,7 +2335,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-041</span>
+                <span>Finding ID: NCR-C8FAB1D8-057</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1693,6 +2357,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-13149<br/>
                         <strong>CVSS Score:</strong> 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.0.7 or 1.1.16 or 2.1.2<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp" target="_blank">https://osv.dev/vulnerability/GHSA-3jxr-9vmj-r5cp</a>
                     </div>
                 </div>
@@ -1709,7 +2374,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-042</span>
+                <span>Finding ID: NCR-C8FAB1D8-058</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1731,6 +2396,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-14257<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 5.0.8 or 3.0.3 or 2.1.3 or 1.1.17<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg" target="_blank">https://osv.dev/vulnerability/GHSA-mh99-v99m-4gvg</a>
                     </div>
                 </div>
@@ -1747,7 +2413,7 @@
         
         <div class="ncr-card">
             <div class="ncr-header">
-                <span>Finding ID: NCR-1F1AA65D-043</span>
+                <span>Finding ID: NCR-C8FAB1D8-059</span>
                 <span>[MAJOR NON-CONFORMITY]</span>
             </div>
             <div class="ncr-body">
@@ -1769,6 +2435,7 @@
                         <strong>Severity:</strong> HIGH<br/>
                         <strong>CVE ID:</strong> CVE-2026-69152<br/>
                         <strong>CVSS Score:</strong> 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)<br/>
+                        <strong>Recommended Fix:</strong> Upgrade to 1.1.18 or 2.1.4 or 3.0.6 or 5.0.9<br/>
                         <strong>URL:</strong> <a href="https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895" target="_blank">https://osv.dev/vulnerability/GHSA-rgw5-rvv9-x895</a>
                     </div>
                 </div>

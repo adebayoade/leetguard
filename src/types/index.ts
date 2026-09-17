@@ -35,7 +35,6 @@ export interface Finding {
   packageVersion?: string;
   summary?: string;
   details?: string;
-  weakage?: any;
   location?: string;
   traces?: string[][];
   cvss?: {

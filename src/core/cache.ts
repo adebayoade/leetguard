@@ -47,7 +47,7 @@ function ensureCacheFile() {
  *
  * @returns A dictionary of cached entries.
  */
-function readCache(): Record<string, CacheEntry<any>> {
+function readCache(): Record<string, CacheEntry<unknown>> {
   ensureCacheFile();
   try {
     const data = readFileSync(cacheFilePath, 'utf-8');
@@ -63,11 +63,11 @@ function readCache(): Record<string, CacheEntry<any>> {
  *
  * @param data - The dictionary of cache entries to write.
  */
-function writeCache(data: Record<string, CacheEntry<any>>) {
+function writeCache(data: Record<string, CacheEntry<unknown>>) {
   ensureCacheFile();
   try {
     writeFileSync(cacheFilePath, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (e) {
+  } catch {
     // Silently fail if cache can't be written (e.g. permissions)
   }
 }

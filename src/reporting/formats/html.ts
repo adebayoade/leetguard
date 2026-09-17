@@ -1,4 +1,4 @@
-import { SecurityReport, Finding } from '../../types/index.js';
+import { SecurityReport } from '../../types/index.js';
 import crypto from 'crypto';
 
 /**

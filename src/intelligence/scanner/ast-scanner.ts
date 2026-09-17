@@ -1,12 +1,24 @@
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 import { parse } from '@babel/parser';
-import _traverse from '@babel/traverse';
+import _traverse, { NodePath, TraverseOptions } from '@babel/traverse';
+import type * as t from '@babel/types';
 import { AntiPatternCategory, Finding } from '../../types/index.js';
 import { getIsoControl } from '../iso-mapper.js';
 
-// Babel's traverse export can be tricky in ESM
-const traverse = typeof _traverse === 'function' ? _traverse : (_traverse as any).default;
+type TraverseFn = (parent: t.Node, opts: TraverseOptions) => void;
+
+// Babel's traverse export can be tricky in ESM: depending on how the module
+// is loaded, the callable function may be the default export itself, or
+// wrapped in a `{ default: fn }` shape. Under this project's module
+// resolution the imported binding's inferred type isn't itself callable,
+// so the runtime-checked result is asserted to the function signature the
+// package actually exposes, rather than left as `any`.
+const traverse = (
+  typeof _traverse === 'function'
+    ? _traverse
+    : (_traverse as unknown as { default: unknown }).default
+) as TraverseFn;
 
 const IGNORE_DIRS = ['node_modules', 'dist', 'build', '.git', '.next', '.nuxt', 'coverage'];
 const ALLOWED_EXTS = ['.js', '.jsx', '.ts', '.tsx'];
@@ -62,7 +74,7 @@ export function scanSourceCode(dir: string): Finding[] {
       });
 
       traverse(ast, {
-        CallExpression(path: any) {
+        CallExpression(path: NodePath<t.CallExpression>) {
           const callee = path.node.callee;
 
           // 1. eval() usage
@@ -73,7 +85,9 @@ export function scanSourceCode(dir: string): Finding[] {
           // 5. sensitive data in console.log
           if (
             callee.type === 'MemberExpression' &&
+            callee.object.type === 'Identifier' &&
             callee.object.name === 'console' &&
+            callee.property.type === 'Identifier' &&
             callee.property.name === 'log'
           ) {
             findings.push(
@@ -84,20 +98,22 @@ export function scanSourceCode(dir: string): Finding[] {
           // 6. insecure AsyncStorage
           if (
             callee.type === 'MemberExpression' &&
+            callee.object.type === 'Identifier' &&
             callee.object.name === 'AsyncStorage' &&
+            callee.property.type === 'Identifier' &&
             callee.property.name === 'setItem'
           ) {
             findings.push(createFinding('insecure AsyncStorage', file, path.node.loc?.start.line));
           }
         },
-        NewExpression(path: any) {
+        NewExpression(path: NodePath<t.NewExpression>) {
           // 2. new Function()
           const callee = path.node.callee;
           if (callee.type === 'Identifier' && callee.name === 'Function') {
             findings.push(createFinding('new Function()', file, path.node.loc?.start.line));
           }
         },
-        StringLiteral(path: any) {
+        StringLiteral(path: NodePath<t.StringLiteral>) {
           const value = path.node.value;
 
           // 4. hardcoded secrets and API keys
@@ -118,7 +134,7 @@ export function scanSourceCode(dir: string): Finding[] {
             );
           }
         },
-        JSXOpeningElement(path: any) {
+        JSXOpeningElement(path: NodePath<t.JSXOpeningElement>) {
           // 8. unvalidated WebView URIs
           const name = path.node.name;
           if (name.type === 'JSXIdentifier' && name.name === 'WebView') {
@@ -128,7 +144,7 @@ export function scanSourceCode(dir: string): Finding[] {
           }
         },
       });
-    } catch (error) {
+    } catch {
       // Ignore parse errors for individual files
     }
   }

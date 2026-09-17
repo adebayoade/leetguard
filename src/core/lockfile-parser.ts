@@ -2,6 +2,23 @@ import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { LockfileData, PackageDependency } from '../types/index.js';
 
+/** Shape of a single package entry as it appears in package-lock.json's `packages` object. */
+interface NpmLockPackageEntry {
+  name?: string;
+  version?: string;
+  resolved?: string;
+  integrity?: string;
+  dev?: boolean;
+  optional?: boolean;
+  peer?: boolean;
+  peerOptional?: boolean;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+  requires?: Record<string, string>;
+  optionalDependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+}
+
 /**
  * Parses the package manager lockfile in the given directory.
  * Currently supports package-lock.json.
@@ -43,7 +60,7 @@ function parseNpmLock(filePath: string): LockfileData {
     ...(rootPackage.peerDependencies || {}),
   };
 
-  for (const [key, pkg] of Object.entries<any>(packages)) {
+  for (const [key, pkg] of Object.entries<NpmLockPackageEntry>(packages)) {
     // In package-lock v2/v3, the root project is ""
     if (key === '') continue;
 
@@ -52,7 +69,7 @@ function parseNpmLock(filePath: string): LockfileData {
 
     dependencies.set(key, {
       name,
-      version: pkg.version,
+      version: pkg.version || '',
       resolved: pkg.resolved,
       integrity: pkg.integrity,
       dev: pkg.dev || false,

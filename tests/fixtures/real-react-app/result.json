@@ -1,29 +1,71 @@
 {
-  "timestamp": "2026-08-30T18:22:00.607Z",
+  "timestamp": "2026-09-17T06:38:13.805Z",
   "scannedDirectory": ".",
-  "totalDependencies": 1299,
+  "totalDependencies": 1331,
   "directDependenciesCount": 3,
-  "transitiveDependenciesCount": 1296,
+  "transitiveDependenciesCount": 1328,
   "metadata": {
     "vulnerabilities": {
       "info": 0,
-      "low": 9,
-      "moderate": 4,
-      "high": 34,
+      "low": 8,
+      "moderate": 9,
+      "high": 35,
       "critical": 0,
-      "total": 47,
-      "totalCVEs": 43
+      "total": 52,
+      "totalCVEs": 59
     },
     "dependencies": {
-      "prod": 1299,
+      "prod": 1331,
       "dev": 0,
-      "optional": 2,
+      "optional": 3,
       "peer": 1,
       "peerOptional": 1,
-      "total": 1299
+      "total": 1331
     }
   },
   "vulnerabilities": [
+    {
+      "packageName": "browserslist",
+      "packageVersion": "4.28.2",
+      "summary": "Browserslist: Uncaught crash / prototype write via untrusted browserslist-stats.json custom stats (normalizeStats)",
+      "details": "## Vulnerability Details\n\n**File**: `node.js`\n**Function**: `normalizeStats()` (line ~214), reached from `getStat()` (called\n**unconditionally** on every `browserslist()` call) and `loadStat()`\n\n### Root Cause\n```js\nfunction normalizeStats(data, stats) {\n  if (!data) { data = {} }\n  if (stats && 'dataByBrowser' in stats) { stats = stats.dataByBrowser }\n  if (typeof stats !== 'object') return undefined\n\n  var normalized = {}\n  for (var i in stats) {\n    var versions = Object.keys(stats[i])\n    if (versions.length === 1 && data[i] && data[i].versions.length === 1) {\n      var normal = data[i].versions[0]\n      normalized[i] = {}\n      normalized[i][normal] = stats[i][versions[0]]\n    } else {\n      normalized[i] = stats[i]\n    }\n  }\n  return normalized\n}\n```\n`stats` is untrusted: it comes from `JSON.parse()`-ing a\n`browserslist-stats.json` file — auto-discovered by walking up the directory\ntree from the project root **on every `browserslist()` call, regardless of\nthe query** (`env.getStat(opts, browserslist.data)` runs unconditionally\ninside `browserslist()`) — or from `opts.stats` passed programmatically /\nvia the CLI's `--stats=` flag. `data` is `browserslist.data`, a plain object\npopulated only with real browser names.\n\nTwo independent bugs from the same root cause (unguarded `for...in` over\nuntrusted keys used with plain-object bracket access/assignment):\n\n1. **Crash**: `data[i]` has no `hasOwnProperty` guard. If `stats` contains a\n   key that also happens to be an inherited `Object.prototype` member name —\n   `\"__proto__\"`, `\"toString\"`, `\"valueOf\"`, `\"constructor\"`,\n   `\"hasOwnProperty\"`, `\"isPrototypeOf\"`, etc. — `data[i]` resolves to that\n   inherited function/object (always truthy), and the code then does\n   `data[i].versions.length` → `undefined.length` → **uncaught `TypeError`**,\n   for any such key whose JSON value has exactly one sub-key, e.g.:\n   ```json\n   { \"toString\": { \"onekey\": 5 }, \"chrome\": { \"100\": 50 } }\n   ```\n2. **Prototype write**: `normalized[i] = ...` on the fresh\n   `normalized = {}` — if `i` is exactly `\"__proto__\"` (and `normalized` has\n   no own property by that name yet), this computed assignment invokes the\n   real `Object.prototype.__proto__` setter, changing `normalized`'s actual\n   `[[Prototype]]` instead of creating a plain property.\n\nBecause this runs on **every** `browserslist()` call regardless of the\nquery, simply committing a poisoned `browserslist-stats.json` anywhere in a\nproject's directory tree breaks every subsequent Browserslist call in that\nproject — including calls made by Autoprefixer, Babel `preset-env`,\nStylelint, or PostCSS internally, for completely unrelated queries.\n\n### Attack Scenario\n1. Attacker submits a PR (or a compromised dependency) adding a\n   `browserslist-stats.json` file anywhere between the project root and\n   filesystem root, containing e.g.\n   `{\"toString\": {\"onekey\": 5}, \"chrome\": {\"100\": 50}}`.\n2. The victim's build/CI pipeline runs any tool that calls `browserslist()`\n   internally, for **any** query.\n3. The auto-discovered poisoned file crashes the process with an uncaught\n   `TypeError` on the very first call.\n\n### Measured Impact\nConfirmed crash (real `browserslist()` call, v4.28.6) with `stats` keys:\n`__proto__`, `toString`, `valueOf`, `hasOwnProperty`, `constructor`,\n`isPrototypeOf` — each paired with a one-key JSON object — for any query,\nincluding `browserslist('defaults')` which never mentions stats.\n\n### Recommended Fix (implemented and verified)\n```js\nvar normalized = Object.create(null)\nfor (var i in stats) {\n  var versions = Object.keys(stats[i])\n  var known = Object.prototype.hasOwnProperty.call(data, i) && data[i]\n  if (versions.length === 1 && known && known.versions.length === 1) {\n    var normal = known.versions[0]\n    normalized[i] = Object.create(null)\n    normalized[i][normal] = stats[i][versions[0]]\n  } else {\n    normalized[i] = stats[i]\n  }\n}\nreturn normalized\n```\n`normalized` uses `Object.create(null)` so a write to `\"__proto__\"` is an\nordinary property set, never a `[[Prototype]]` change; `data[i]` is replaced\nwith an explicit `hasOwnProperty` check so it never resolves to an inherited\n`Object.prototype` member.\n\n**Verification**:\n- `NODE_ENV=test npx uvu test .test.js` → 301/301 pass unmodified\n  (`test/custom.test.js`, `test/shareable-stats.test.js`, `test/cover.test.js`\n  exercise the stats-handling paths).\n- All 6 previously crash-inducing keys, tested individually, now resolve\n  without error.\n- The realistic file-based auto-discovery scenario (poisoned\n  `browserslist-stats.json` + an unrelated `browserslist('defaults')` call)\n  now returns a normal result instead of crashing.\n\n### Impact\n- **Who is affected**: Any project whose build/CI invokes Browserslist\n  (directly or via Autoprefixer/Babel/Stylelint/PostCSS) in a directory tree\n  an attacker can place a file into (external PR, compromised dependency),\n  or any app that passes user-influenced data into `opts.stats`.\n- **What an attacker achieves**: Immediate DoS — crashes the invoking\n  process on the first Browserslist call after the file is present, for any\n  query, no special syntax needed.\n- **Conditions required**: No authentication — only the ability to add a\n  file to the project's directory tree, or influence `opts.stats`.\n\n### Verification Environment\nbrowserslist @ HEAD (== v4.28.6, current latest stable release) under local\nNode.js v20.19.5. Pure JS library — executed directly, no server needed.\n\n### Note\nFound via a systematic review of prototype-pollution-adjacent patterns in\nthis codebase after confirming two unrelated algorithmic-complexity issues\n(reported separately as GHSA-rrmg-cfrq-23vv and GHSA-g6p8-hj8g-x889) in the\nsame research pass. A similar `for...in` + bracket-write pattern in\n`index.js`'s `copyObject()` (used by `normalizeAndroidData`) was already\nguarded against `__proto__`/`constructor`/`prototype` keys by a prior,\nunrelated commit — that guard was never applied to this function.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-73wf-gq98-2v4g",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["4.28.7"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": ["CWE-1321", "CWE-248"],
+      "aliases": ["CVE-2026-73088"],
+      "url": "https://osv.dev/vulnerability/GHSA-73wf-gq98-2v4g",
+      "traces": [["react-scripts", "browserslist"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "browserslist",
+      "packageVersion": "4.28.2",
+      "summary": "Browserslist: Unbounded memory growth (no cache eviction) via distinct query results, leading to eventual OOM",
+      "details": "## Vulnerability Details\n\n**File**: `index.js`\n**Location**: `cache` (browserslist()'s result cache, line ~402) and\n`parseCache` (parseQueries()'s AST cache)\n\n### Root Cause\n```js\nvar cache = {}\nvar parseCache = {}\n\nfunction browserslist(queries, opts) {\n  ...\n  var cacheKey = JSON.stringify([queries, context])\n  if (cache[cacheKey]) return cache[cacheKey]\n  ...\n  if (!env.env.BROWSERSLIST_DISABLE_CACHE) { cache[cacheKey] = result }\n  return result\n}\n\nfunction parseQueries(queries) {\n  var cacheKey = JSON.stringify(queries)\n  if (cacheKey in parseCache) return parseCache[cacheKey]\n  var result = parseWithoutCache(QUERIES, queries)\n  if (!env.env.BROWSERSLIST_DISABLE_CACHE) { parseCache[cacheKey] = result }\n  ...\n}\n```\nEvery distinct `(queries, context)` pair is cached forever — no size cap,\nTTL, or eviction. `browserslist.clearCaches()` never resets either object\n(it only resets `node.js`'s own filesystem caches); the only opt-out is the\n`BROWSERSLIST_DISABLE_CACHE` env var, controlled by the *calling\napplication*, not an attacker.\n\nSome short, valid queries amplify this badly. The `since <year>-<month>-<day>`\nquery type (`/^since (\\d+)-(\\d+)-(\\d+)$/i`) accepts **any** digit\ncombination — `Date.UTC()` normalizes rather than rejects out-of-range\nvalues — giving an effectively unbounded space of ~17-byte distinct cache\nkeys, each of which resolves to (and caches) a result close to the full\n~8.5 KB browser list for any sufficiently old year.\n\n### Measured Impact\n20,000 distinct `since <year>-<month>-<day>` queries (~330 KB total input,\n`--expose-gc` before/after measurement to rule out uncollected garbage)\nretained **over 50 MB** of heap permanently — roughly **150x**\namplification, growing linearly with no cap observed up to 40,000 queries\n(52.3 MB).\n\n### Attack Scenario\nAny long-running process (server, daemon, warm CI worker) that calls\n`browserslist()` with a query value that varies across requests/items and is\ninfluenced, even partially, by external input accumulates one cache entry\nper distinct value ever seen. An attacker who can influence that value\nacross *many* requests (this is a volumetric attack, unlike the\nsingle-request DoS findings from this same research pass) sends a stream of\ncheap, distinct queries (e.g. `since 1900-01-01`, `since 1900-01-02`, ...)\nuntil the process runs out of memory and crashes.\n\n### Recommended Fix (implemented and verified)\nReplace both plain-object caches with `Map`s bounded to a fixed maximum\nentry count, evicting the oldest entry once the cap is reached (`Map`\npreserves insertion order, so `.keys().next().value` is always oldest):\n\n```js\nvar CACHE_MAX_ENTRIES = 500\n\nfunction boundedCacheSet(map, key, value) {\n  if (map.size >= CACHE_MAX_ENTRIES) {\n    map.delete(map.keys().next().value)\n  }\n  map.set(key, value)\n}\n\nvar cache = new Map()\nvar parseCache = new Map()\n```\n(read sites changed to `.has()`/`.get()`, write sites to `boundedCacheSet()`)\n\n**Verification**:\n- `NODE_ENV=test npx uvu test .test.js` → 301/301 pass unmodified\n  (`test/cache.test.js` exercises `clearCaches()`/`BROWSERSLIST_DISABLE_CACHE`\n  against `node.js`'s separate filesystem caches, unaffected here); confirmed\n  a repeated identical call still returns the cached reference.\n- Re-ran the memory PoC post-fix: heap stayed flat at ~4.9 MB after 5,000,\n  10,000, 20,000, and 40,000 distinct `since`-date queries (was\n  10.5 → 16.5 → 28.4 → 52.3 MB pre-fix).\n\n### Impact\n- **Who is affected**: Long-running processes calling `browserslist()` with\n  query values that vary across requests/items and are influenced by\n  external input.\n- **What an attacker achieves**: DoS via eventual out-of-memory crash, given\n  sustained traffic over time (not a single small payload).\n- **Conditions required**: No authentication; requires volume rather than a\n  single request, hence Medium rather than High severity.\n\n### Verification Environment\nbrowserslist @ HEAD (== v4.28.6, current latest stable release) under local\nNode.js v20.19.5, run with `--expose-gc` for accurate heap measurement.\n\n### Note\nFound during a broader review of this codebase in the same research pass\nthat produced GHSA-rrmg-cfrq-23vv (parse.js algorithmic complexity),\nGHSA-g6p8-hj8g-x889 (baseline regexp ReDoS), GHSA-73wf-gq98-2v4g\n(normalizeStats crash/prototype write), and GHSA-h633-868p-5rfw\n(SCOPED_CONFIG__PATTERN ReDoS) — all single-request DoS vectors. This one is\ndifferent in character (volumetric, not single-request) and is reported\nseparately/scored lower accordingly.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-c83g-rgw3-j3cx",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["4.28.7"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": ["CWE-770"],
+      "aliases": ["CVE-2026-73089"],
+      "url": "https://osv.dev/vulnerability/GHSA-c83g-rgw3-j3cx",
+      "traces": [["react-scripts", "browserslist"]],
+      "isDirect": false
+    },
     {
       "packageName": "postcss",
       "packageVersion": "8.5.15",
@@ -34,6 +76,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.5.23"],
       "cwe": ["CWE-200", "CWE-22"],
       "aliases": ["CVE-2026-69153"],
       "url": "https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp",
@@ -50,6 +93,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.5.18"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
@@ -70,6 +114,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.2.1"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N"
@@ -90,6 +135,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.2.4"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N"
@@ -110,6 +156,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.2.1"],
       "cvss": {
         "score": 6.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N"
@@ -130,6 +177,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.2.6"],
       "cvss": {
         "score": 4.7,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:N/A:L"
@@ -150,6 +198,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.2.6"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
@@ -170,6 +219,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.2.5"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
@@ -178,6 +228,23 @@
       "aliases": ["CVE-2026-9595"],
       "url": "https://osv.dev/vulnerability/GHSA-mx8g-39q3-5c79",
       "traces": [["react-scripts", "webpack-dev-server"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "baseline-browser-mapping",
+      "packageVersion": "2.10.37",
+      "summary": "baseline-browser-mapping process termination on invalid input causes denial of service",
+      "details": "baseline-browser-mapping 2.x before 2.11.0 calls process.exit() instead of throwing on invalid or conflicting input parameters, and can trigger immediate process termination, causing denial of service.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-w5vr-8v7q-w6rv",
+      "severity": "MODERATE",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.11.0"],
+      "cwe": ["CWE-705"],
+      "aliases": ["CVE-2026-45819"],
+      "url": "https://osv.dev/vulnerability/GHSA-w5vr-8v7q-w6rv",
+      "traces": [["react-scripts", "browserslist", "baseline-browser-mapping"]],
       "isDirect": false
     },
     {
@@ -190,6 +257,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["7.0.3"],
       "cvss": {
         "score": 8.1,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
@@ -210,6 +278,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["7.0.5"],
       "cvss": {
         "score": 5.9,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -223,6 +292,27 @@
     {
       "packageName": "js-yaml",
       "packageVersion": "4.2.0",
+      "summary": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+      "details": "## Summary\n\n`maxTotalMergeKeys` does not count empty mappings. An attacker can repeatedly merge a large sequence of them and consume significant CPU without reaching the configured limit.\n\n## Example\n\n```yaml\narr: &arr [{}, {}, {}, ...] # N empty mappings\ntargets:\n  - <<: *arr                # repeated K times\n```\n\nFor every target, the loader iterates all `N` elements of `arr`. This results in `O(N * K)` work while `totalMergeKeys` remains unchanged.\n\n## PoC\n\n```js\nimport { performance } from 'node:perf_hooks'\nimport { load, YAML11_SCHEMA } from 'js-yaml'\n\nconst n = 20000\n\nconst src =\n  'arr: &arr [' + '{},'.repeat(n).slice(0, -1) + ']\\n' +\n  'targets:\\n' +\n  '  - <<: *arr\\n'.repeat(n)\n\nconst started = performance.now()\n\nload(src, { schema: YAML11_SCHEMA })\n\nconsole.log(`${(performance.now() - started).toFixed(1)} ms`)\n```\n\nObserved results:\n\n| N | YAML size | Time |\n|---:|---:|---:|\n| 800 | ~13 KB | ~20 ms |\n| 3200 | ~50 KB | ~180 ms |\n| 20000 | ~500 KB | ~13 s |\n\n## Impact\n\nAn attacker can submit a relatively small YAML document that causes prolonged CPU consumption despite the default `maxTotalMergeKeys` limit.\n\n## Fix\n\nCount each merge-source mapping as one budget unit, in addition to counting its keys.\n\n## Difference with v5\n\nIn v3 & v4, merge is enabled by default. So, the severity score is higher.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-2883-xcg3-v3hh",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["4.3.2", "3.15.2"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": ["CWE-400", "CWE-407"],
+      "aliases": ["CVE-2026-84375"],
+      "url": "https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh",
+      "traces": [["react-scripts", "eslint", "js-yaml"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "js-yaml",
+      "packageVersion": "4.2.0",
       "summary": "js-yaml: YAML merge-key chains can force quadratic CPU consumption",
       "details": "### Impact\n\njs-yaml can spend quadratic CPU time parsing a document whose size grows only linearly. The issue is triggered by a chain of mappings where each mapping merges the previous one:\n\n```yaml\na0: &a0 { k0: 0 }\na1: &a1 { <<: *a0, k1: 1 }\na2: &a2 { <<: *a1, k2: 2 }\na3: &a3 { <<: *a2, k3: 3 }\n...\nb: *aN\n```\n\nFor each new mapping, the loader has to enumerate the keys inherited from the previous mapping. With N chained mappings, this results in roughly 1 + 2 + ... + N merged-key visits, i.e., O(N^2) work for O(N) input size.\n\n### PoC\n\nFrom N = 4000 delay become > 1s (doc size < 100K)\n\n```js\nimport { performance } from 'node:perf_hooks'\nimport { Buffer } from 'node:buffer'\nimport { load, YAML11_SCHEMA } from 'js-yaml'\n\nconst n = Number(process.argv[2] || 4000)\n\nfunction makeMergeChain (count) {\n  const lines = ['a0: &a0 { k0: 0 }']\n\n  for (let i = 1; i < count; i++) {\n    lines.push(`a${i}: &a${i} { <<: *a${i - 1}, k${i}: ${i} }`)\n  }\n\n  lines.push(`b: *a${count - 1}`)\n  return `${lines.join('\\n')}\\n`\n}\n\nconst source = makeMergeChain(n)\n\nconsole.log(source.split('\\n').slice(0, 8).join('\\n'))\nconsole.log('...')\nconsole.log(source.split('\\n').slice(-4).join('\\n'))\nconsole.log()\nconsole.log(`N: ${n}`)\nconsole.log(`YAML size: ${Buffer.byteLength(source)} bytes`)\n\nconst started = performance.now()\nconst result = load(source, { schema: YAML11_SCHEMA })\nconst elapsed = performance.now() - started\n\nconsole.log(`parse time: ${elapsed.toFixed(1)} ms`)\nconsole.log(`top-level keys: ${Object.keys(result).length}`)\nconsole.log(`b keys: ${Object.keys(result.b).length}`)\n```\n\n### Patches\n\nFix released. The most robust protection is to limit the total number of merged keys per parse call. This should close all past and future edge cases with merge. The default 10K-key limit should be okay in most cases.",
       "category": "Injection & Dynamic Execution",
@@ -230,6 +320,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.15.0", "4.3.0"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -250,6 +341,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["4.3.1", "3.15.1"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -270,6 +362,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.3.16", "5.1.16"],
       "cvss": {
         "score": 5.9,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -290,6 +383,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.3.18", "5.1.6"],
       "cvss": {
         "score": 5.9,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -310,6 +404,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["1.9.0"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -330,6 +425,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.5.12"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
@@ -350,6 +446,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.4.31"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
@@ -370,6 +467,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.5.23"],
       "cwe": ["CWE-200", "CWE-22"],
       "aliases": ["CVE-2026-69153"],
       "url": "https://osv.dev/vulnerability/GHSA-fxqj-rqcc-2cmp",
@@ -386,6 +484,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.5.10"],
       "cvss": {
         "score": 6.1,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
@@ -406,6 +505,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["8.5.18"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
@@ -426,6 +526,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.0.6", "4.1.0", "2.0.10"],
       "cwe": ["CWE-187", "CWE-20"],
       "aliases": ["CVE-2026-55602"],
       "url": "https://osv.dev/vulnerability/GHSA-64mm-vxmg-q3vj",
@@ -442,6 +543,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["2.8.3", "3.3.4", "4.0.2"],
       "cvss": {
         "score": 8.2,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N"
@@ -449,6 +551,48 @@
       "cwe": ["CWE-184", "CWE-79"],
       "aliases": ["CVE-2026-73650"],
       "url": "https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545",
+      "traces": [["react-scripts", "@svgr/webpack", "@svgr/plugin-svgo", "svgo"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "svgo",
+      "packageVersion": "1.3.2",
+      "summary": "SVGO: removeScripts incompletely sanitizes executable HTML in SVG foreignObject elements",
+      "details": "## Summary\n\nSVGO's opt-in `removeScripts` plugin did not inspect executable HTML content inside SVG `<foreignObject>` elements. Applications that used this plugin as their only protection for untrusted SVG input could produce SVGs containing active HTML and expose users to cross-site scripting (XSS).\n\nSVGO is an optimizer rather than a comprehensive sanitization library, but `removeScripts` is maintained for consumers that already rely on it to remove common script execution paths.\n\n## Details\n\nAlthough the plugin removed SVG and XHTML `<script>` elements, it left other HTML execution paths inside `<foreignObject>` unchanged. These included:\n\n- event-handler attributes such as `onload` and `onbeforetoggle`;\n- `srcdoc` documents, including on `<iframe>` elements;\n- executable URLs in HTML attributes such as `action`, `data`, `formaction`, `href`, and `src`.\n\nAn attacker could place one of these payloads in an SVG. If an application optimized the untrusted SVG with `removeScripts` and then served the result in an active browser context, the payload could execute in the viewer's origin.\n\n## Impact\n\nSuccessful exploitation could allow script execution in the context where the optimized SVG is rendered. Depending on the embedding and origin configuration, this could expose cookies or local storage, modify content, or perform actions as the victim.\n\nThe plugin is opt-in, so consumers that do not enable `removeScripts` are not relying on the affected behavior. Typical local optimization of trusted SVG files is not affected.\n\n## Patches\n\nUpgrade to one of the following releases for the maintained release line in use:\n\n| Release line | Patched version | Plugin |\n| --- | --- | --- |\n| v2 | 2.8.4 | `removeScriptElement` |\n| v3 | 3.3.5 | `removeScriptElement` |\n| v4 | 4.1.0 | `removeScripts` |\n\nThe fix preserves visual HTML inside SVG `<foreignObject>` elements while removing event attributes, `srcdoc`, and executable URL values from active HTML URL attributes.\n\nSVGO v1 is no longer maintained. Users of v1 should upgrade to a supported release line.\n\n## Workarounds\n\nFor hostile input, use a dedicated SVG sanitization tool before passing the SVG to SVGO. As defense in depth, applications can reject or remove `<foreignObject>` content and avoid serving user-controlled SVGs in an active same-origin context.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-4vpr-x523-8j87",
+      "severity": "MODERATE",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.8.4", "3.3.5", "4.1.0"],
+      "cvss": {
+        "score": 6.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+      },
+      "cwe": ["CWE-79"],
+      "aliases": ["CVE-2026-84369"],
+      "url": "https://osv.dev/vulnerability/GHSA-4vpr-x523-8j87",
+      "traces": [["react-scripts", "@svgr/webpack", "@svgr/plugin-svgo", "svgo"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "svgo",
+      "packageVersion": "1.3.2",
+      "summary": "SVGO: removeScripts allows executable links through namespace and control-character bypasses",
+      "details": "## Summary\n\nSVGO's opt-in `removeScripts` plugin failed to remove some executable links. Namespace-prefixed SVG anchors and URL schemes containing ASCII tabs or newlines could bypass its checks. Applications that used this plugin as their only protection for untrusted SVG input could expose users to cross-site scripting (XSS).\n\nSVGO is an optimizer rather than a comprehensive sanitization library, but `removeScripts` is maintained for consumers that already rely on it to remove common script execution paths.\n\n## Details\n\nTwo related bypasses were present:\n\n1. The plugin inspected unprefixed SVG `<a>` elements but did not recognize namespace-prefixed SVG anchors such as `<svg:a>` when the prefix was bound to the SVG namespace. Their executable `href` or namespaced `*:href` values remained intact.\n2. The URL check did not account for ASCII tab, line-feed, or carriage-return characters embedded in a scheme. Browsers remove these characters before parsing the scheme, so values such as `java&#9;script:` could remain executable after bypassing the plugin's `javascript:` check.\n\nAnchors in unrelated custom namespaces are not executable SVG anchors and remain untouched.\n\n## Impact\n\nIf an application optimized attacker-controlled SVGs with `removeScripts` and then served the result in an active browser context, a victim could follow a link that executes script in the SVG's origin. Depending on the embedding and origin configuration, this could expose cookies or local storage, modify content, or perform actions as the victim.\n\nThe plugin is opt-in, so consumers that do not enable it are not relying on the affected behavior. Typical local optimization of trusted SVG files is not affected.\n\n## Patches\n\nUpgrade to one of the following releases for the maintained release line in use:\n\n| Release line | Patched version | Plugin |\n| --- | --- | --- |\n| v2 | 2.8.4 | `removeScriptElement` |\n| v3 | 3.3.5 | `removeScriptElement` |\n| v4 | 4.1.0 | `removeScripts` |\n\nThe fix makes SVG anchor handling namespace-aware and strips ASCII tabs, line feeds, and carriage returns before checking executable URL schemes.\n\nSVGO v1 is no longer maintained. Users of v1 should upgrade to a supported release line.\n\n## Workarounds\n\nFor hostile input, use a dedicated SVG sanitization tool before passing the SVG to SVGO. Applications can also reject links from untrusted SVG input and avoid serving user-controlled SVGs in an active same-origin context.\n\n## References\n\n- v4 fix: https://github.com/svg/svgo/pull/2268\n- related executable URL hardening: https://github.com/svg/svgo/pull/2263\n- v3 backport: https://github.com/svg/svgo/pull/2269\n- v2 backport: https://github.com/svg/svgo/pull/2272\n- v4.1.0 release: https://github.com/svg/svgo/releases/tag/v4.1.0\n- v3.3.5 release: https://github.com/svg/svgo/releases/tag/v3.3.5\n- v2.8.4 release: https://github.com/svg/svgo/releases/tag/v2.8.4",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-w27v-7q3p-w38r",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.8.4", "3.3.5", "4.1.0"],
+      "cvss": {
+        "score": 8.2,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N"
+      },
+      "cwe": ["CWE-184", "CWE-79"],
+      "aliases": ["CVE-2026-84370"],
+      "url": "https://osv.dev/vulnerability/GHSA-w27v-7q3p-w38r",
       "traces": [["react-scripts", "@svgr/webpack", "@svgr/plugin-svgo", "svgo"]],
       "isDirect": false
     },
@@ -462,6 +606,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["1.13.8"],
       "cvss": {
         "score": 5.9,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -475,6 +620,27 @@
     {
       "packageName": "js-yaml",
       "packageVersion": "4.2.0",
+      "summary": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+      "details": "## Summary\n\n`maxTotalMergeKeys` does not count empty mappings. An attacker can repeatedly merge a large sequence of them and consume significant CPU without reaching the configured limit.\n\n## Example\n\n```yaml\narr: &arr [{}, {}, {}, ...] # N empty mappings\ntargets:\n  - <<: *arr                # repeated K times\n```\n\nFor every target, the loader iterates all `N` elements of `arr`. This results in `O(N * K)` work while `totalMergeKeys` remains unchanged.\n\n## PoC\n\n```js\nimport { performance } from 'node:perf_hooks'\nimport { load, YAML11_SCHEMA } from 'js-yaml'\n\nconst n = 20000\n\nconst src =\n  'arr: &arr [' + '{},'.repeat(n).slice(0, -1) + ']\\n' +\n  'targets:\\n' +\n  '  - <<: *arr\\n'.repeat(n)\n\nconst started = performance.now()\n\nload(src, { schema: YAML11_SCHEMA })\n\nconsole.log(`${(performance.now() - started).toFixed(1)} ms`)\n```\n\nObserved results:\n\n| N | YAML size | Time |\n|---:|---:|---:|\n| 800 | ~13 KB | ~20 ms |\n| 3200 | ~50 KB | ~180 ms |\n| 20000 | ~500 KB | ~13 s |\n\n## Impact\n\nAn attacker can submit a relatively small YAML document that causes prolonged CPU consumption despite the default `maxTotalMergeKeys` limit.\n\n## Fix\n\nCount each merge-source mapping as one budget unit, in addition to counting its keys.\n\n## Difference with v5\n\nIn v3 & v4, merge is enabled by default. So, the severity score is higher.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-2883-xcg3-v3hh",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["4.3.2", "3.15.2"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": ["CWE-400", "CWE-407"],
+      "aliases": ["CVE-2026-84375"],
+      "url": "https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh",
+      "traces": [["react-scripts", "eslint", "@eslint/eslintrc", "js-yaml"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "js-yaml",
+      "packageVersion": "4.2.0",
       "summary": "js-yaml: YAML merge-key chains can force quadratic CPU consumption",
       "details": "### Impact\n\njs-yaml can spend quadratic CPU time parsing a document whose size grows only linearly. The issue is triggered by a chain of mappings where each mapping merges the previous one:\n\n```yaml\na0: &a0 { k0: 0 }\na1: &a1 { <<: *a0, k1: 1 }\na2: &a2 { <<: *a1, k2: 2 }\na3: &a3 { <<: *a2, k3: 3 }\n...\nb: *aN\n```\n\nFor each new mapping, the loader has to enumerate the keys inherited from the previous mapping. With N chained mappings, this results in roughly 1 + 2 + ... + N merged-key visits, i.e., O(N^2) work for O(N) input size.\n\n### PoC\n\nFrom N = 4000 delay become > 1s (doc size < 100K)\n\n```js\nimport { performance } from 'node:perf_hooks'\nimport { Buffer } from 'node:buffer'\nimport { load, YAML11_SCHEMA } from 'js-yaml'\n\nconst n = Number(process.argv[2] || 4000)\n\nfunction makeMergeChain (count) {\n  const lines = ['a0: &a0 { k0: 0 }']\n\n  for (let i = 1; i < count; i++) {\n    lines.push(`a${i}: &a${i} { <<: *a${i - 1}, k${i}: ${i} }`)\n  }\n\n  lines.push(`b: *a${count - 1}`)\n  return `${lines.join('\\n')}\\n`\n}\n\nconst source = makeMergeChain(n)\n\nconsole.log(source.split('\\n').slice(0, 8).join('\\n'))\nconsole.log('...')\nconsole.log(source.split('\\n').slice(-4).join('\\n'))\nconsole.log()\nconsole.log(`N: ${n}`)\nconsole.log(`YAML size: ${Buffer.byteLength(source)} bytes`)\n\nconst started = performance.now()\nconst result = load(source, { schema: YAML11_SCHEMA })\nconst elapsed = performance.now() - started\n\nconsole.log(`parse time: ${elapsed.toFixed(1)} ms`)\nconsole.log(`top-level keys: ${Object.keys(result).length}`)\nconsole.log(`b keys: ${Object.keys(result.b).length}`)\n```\n\n### Patches\n\nFix released. The most robust protection is to limit the total number of merged keys per parse call. This should close all past and future edge cases with merge. The default 10K-key limit should be okay in most cases.",
       "category": "Injection & Dynamic Execution",
@@ -482,6 +648,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.15.0", "4.3.0"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -502,6 +669,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["4.3.1", "3.15.1"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -522,6 +690,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.0.7", "1.1.16", "2.1.2"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
@@ -542,6 +711,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.0.8", "3.0.3", "2.1.3", "1.1.17"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -562,6 +732,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["1.1.18", "2.1.4", "3.0.6", "5.0.9"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -582,6 +753,7 @@
       "severity": "LOW",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["1.20.6", "2.3.0"],
       "cvss": {
         "score": 3.7,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
@@ -590,6 +762,48 @@
       "aliases": ["CVE-2026-12590"],
       "url": "https://osv.dev/vulnerability/GHSA-v422-hmwv-36x6",
       "traces": [["react-scripts", "webpack-dev-server", "express", "body-parser"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "qs",
+      "packageVersion": "6.15.2",
+      "summary": "qs: Denial of Service via Attacker Controlled isBuffer",
+      "details": "### Summary\n\n`qs.stringify()` calls `utils.isBuffer()` on every value it serializes, and `utils.isBuffer()` invokes `obj.constructor.isBuffer(obj)` without checking that it is callable. A value whose own `constructor.isBuffer` is a non-function makes `qs` call a non-callable and throw `TypeError`. Such a value is produced **by `qs.parse` itself** from an untrusted query string when `plainObjects: true` or `allowPrototypes: true` is set, so a pure-`qs` `parse` → `stringify` round-trip — no `JSON.parse` — turns an unauthenticated query string into an uncaught throw.\n\nAn attacker-controlled `parse` input reaches the host application's availability asset — via `qs`'s own recommended `plainObjects` mitigation — and triggers an uncaught exception during a `parse` → `stringify` round-trip.\n\n### Details\n`utils.isBuffer` runs at `lib/stringify.js:127` for every serialized value:\n\n```js\nif (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) { ... }\n```\n\n`utils.isBuffer` (`lib/utils.js:327-333`) invokes `obj.constructor.isBuffer` without verifying it is callable:\n\n```js\nvar isBuffer = function isBuffer(obj) {\n    if (!obj || typeof obj !== 'object') { return false; }\n    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));\n};\n```\n\n`constructor` and `isBuffer` are ordinary keys. `qs.parse` with `plainObjects: true` or `allowPrototypes: true` keeps them as own properties, so the parsed value carries a non-function `constructor.isBuffer`; `stringify` then calls a non-callable and throws `TypeError`. By contrast `utils.isRegExp` uses a brand check (`Object.prototype.toString`); the missing guard here is an internal inconsistency, not a platform limitation.\n\n\n### Trust Boundary Note\n\n`qs.stringify` alone treats its input as caller-constructed, so serializing a hostile object could be argued outside its contract. This report does not depend on that framing: the malicious shape is produced by **`qs.parse`, whose input is untrusted by design**. `qs.parse` normally strips a `constructor` key via its prototype guard, but with the documented options `plainObjects: true` or `allowPrototypes: true` the key survives and lands as an own property. Feeding the parsed object back into `qs.stringify` — the standard round-trip in gateways and request-forwarders — then hits the unchecked call. \n\n\n### PoC\n`poc02c_isBuffer_qs_only_roundtrip.js` — pure-`qs` chain, no `JSON.parse`; an untrusted query string alone reaches the throw:\n\n```js\n'use strict';\nvar qs = require('qs');\n\nvar untrustedQueryString = 'x%5Bconstructor%5D%5BisBuffer%5D=y'; // x[constructor][isBuffer]=y\n\nvar parsed = qs.parse(untrustedQueryString, { plainObjects: true });\nconsole.log('[parse] kept constructor key:', JSON.stringify(parsed));\n\ntry {\n    qs.stringify(parsed);\n    console.log('[stringify] no throw (unexpected)');\n} catch (e) {\n    console.log('[stringify] DoS reproduced ->', e.constructor.name + ':', e.message);\n}\n```\n\n`poc02_isBuffer.js` — the minimal defect:\n\n```js\n'use strict';\nvar qs = require('qs');\ntry {\n    qs.stringify(JSON.parse('{\"a\":{\"constructor\":{\"isBuffer\":\"x\"}}}'));\n} catch (e) {\n    console.log('[A] DoS reproduced ->', e.constructor.name + ':', e.message);\n}\n```\n\n`poc02b_isBuffer_async_crash.js` — worker death in an async sink:\n\n```js\n'use strict';\nvar qs = require('qs');\n\nfunction handleRequestAsync(clientJsonBody) {\n    try {\n        setImmediate(function () {                 // async continuation, outside the try\n            qs.stringify(JSON.parse(clientJsonBody)); // throws here, uncaught\n        });\n        console.log('[handler] returned 200 synchronously; async work scheduled');\n    } catch (e) {\n        console.log('[handler] caught synchronously (will NOT happen):', e.message);\n    }\n}\nprocess.on('exit', function (code) {\n    console.log('[proc] process exiting with code:', code);\n});\nhandleRequestAsync('{\"filters\":{\"constructor\":{\"isBuffer\":\"x\"}}}');\n```\n\n### Execution Steps\n\n```bash\ncd poc\nnpm install qs@6.15.3\nnode poc02c_isBuffer_qs_only_roundtrip.js  # pure qs parse->stringify -> TypeError\nnode poc02_isBuffer.js                      # minimal defect -> TypeError inside stringify\nnode poc02b_isBuffer_async_crash.js         # async sink -> uncaught throw -> exit code 1\n```\n\n### Reproduction Evidence\n\n`poc02c_isBuffer_qs_only_roundtrip.js` :\n\n```\n[parse] kept constructor key: {\"x\":{\"constructor\":{\"isBuffer\":\"y\"}}}\n[stringify] DoS reproduced -> TypeError: obj.constructor.isBuffer is not a function\n```\n\n`poc02_isBuffer.js`:\n\n```\n[A] DoS reproduced -> TypeError: obj.constructor.isBuffer is not a function\n```\n\n`poc02b_isBuffer_async_crash.js` :\n\n```\n[handler] returned 200 synchronously; async work scheduled\n[proc] process exiting with code: 1\nTypeError: obj.constructor.isBuffer is not a function\n    at Object.isBuffer (.../qs/lib/utils.js:332:78)\n    at stringify (.../qs/lib/stringify.js:127:45)\n=== EXIT CODE: 1 ===\n```\n\nThe pure-`qs` round-trip shows the malicious shape originates from `qs.parse` of an untrusted query string, with no `JSON.parse`. The synchronous `try/catch` in the async case does not catch the throw; the process exits with code 1, denying service to all requests on that worker.\n\n### Impact\n\nAn unauthenticated request degrades any endpoint that re-serializes deserialized client data with `qs.stringify`. The primary impact is a per-request failure: the handler throws and the framework returns HTTP 500. Where the call sits in an unguarded async continuation, the throw escapes and the worker process exits, denying service to all requests it was handling, which means a higher impact that depends on the application's error handling, not on `qs`.\n\n### Recommended Fix\n\nReplace the duck-type with a brand check mirroring `utils.isRegExp`:\n\n```js\nvar isBuffer = function isBuffer(obj) {\n    if (!obj || typeof obj !== 'object') { return false; }\n    if (typeof Buffer !== 'undefined' && typeof Buffer.isBuffer === 'function') {\n        return Buffer.isBuffer(obj);\n    }\n    return Object.prototype.toString.call(obj) === '[object Uint8Array]';\n};\n```\n\nIf duck-typing must remain, require `typeof obj.constructor.isBuffer === 'function'` before invoking and wrap the call in `try/catch`.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-4mjr-xmp4-gh2g",
+      "severity": "MODERATE",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["6.16.0"],
+      "cvss": {
+        "score": 5.3,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      },
+      "cwe": ["CWE-248", "CWE-703"],
+      "aliases": ["CVE-2026-82417"],
+      "url": "https://osv.dev/vulnerability/GHSA-4mjr-xmp4-gh2g",
+      "traces": [["react-scripts", "webpack-dev-server", "express", "qs"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "qs",
+      "packageVersion": "6.15.2",
+      "summary": "qs array-limit bypass via bracket-key comma parsing",
+      "details": "### Summary\n\n`qs` `v6.15.3` allows bracket-key input to bypass `arrayLimit` and `throwOnLimitExceeded` when `comma: true`. The input `a[]=1,2,3,4` succeeds with `arrayLimit: 3`, while the equivalent plain-key input is rejected.\n\nAffected version tested:\n\n```text\nqs v6.15.3\ncommit 18d085e919dae70c8f1b200ab99323058edab2c2\n```\n\n### Details\n\n`parseArrayValue()` enforces the comma limit only for flat values. The `a[]` form is marked non-flat, so its comma-separated value is wrapped after parsing and the inner array is not checked. A single parameter can therefore materialize arbitrarily large arrays.\n\n### PoC\n\n```js\nconst qs = require('qs')\nconst options = { comma: true, arrayLimit: 3, throwOnLimitExceeded: true }\n\nconst result = qs.parse('a[]=1,2,3,4', options)\nconsole.log(result.a[0].length) // 4; expected RangeError\n\nconst big = qs.parse('a[]=' + '1,'.repeat(1000000) + '1', { comma: true, arrayLimit: 20 })\nconsole.log(big.a[0].length) // 1000001\n```\n\nOn `v6.15.3`, the first input parses successfully and the second creates an array with 1,000,001 elements. The equivalent `a=1,2,3,4` input throws `RangeError` as expected.\n\n### Impact\n\nAn attacker who can supply a query string or form body can bypass configured array limits and force excessive memory allocation, causing denial of service. The limit must be applied after comma splitting and before the resulting array is wrapped.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-x5fp-wj9c-mxmx",
+      "severity": "MODERATE",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["6.16.0"],
+      "cvss": {
+        "score": 3.7,
+        "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L"
+      },
+      "cwe": ["CWE-770"],
+      "aliases": ["CVE-2026-82562"],
+      "url": "https://osv.dev/vulnerability/GHSA-x5fp-wj9c-mxmx",
+      "traces": [["react-scripts", "webpack-dev-server", "express", "qs"]],
       "isDirect": false
     },
     {
@@ -602,6 +816,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["11.1.1", "12.0.1", "13.0.1"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
@@ -622,6 +837,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["4.0.1", "3.1.3", "2.4.2"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
@@ -644,6 +860,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["2.4.4", "3.1.5", "4.1.2"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
@@ -659,6 +876,75 @@
     {
       "packageName": "fast-uri",
       "packageVersion": "3.1.2",
+      "summary": "fast-uri vulnerable to server-side request forgery via malformed IPv6 normalization",
+      "details": "### Impact\n\n`fast-uri` does not validate the complete RFC 3986 grammar for bracketed IPv6 literals, so a malformed literal with invalid trailing text is silently truncated to a different valid IPv6 address with no error reported. For example, `normalize('http://[::not-valid]/private')` returns `http://[::]/private`, and `[fc00::not-hex]` and `[fe80::not-hex]` collapse to `[fc00::]` and `[fe80::]`. An application that normalizes an untrusted URL before an outbound request, redirect, or host-policy check can be routed to a local or private address such as loopback (`::1`), unique-local, or link-local. Because `parse().error` is unset for these inputs, checking it does not protect the consumer.\n\n### Patches\n\nUpgrade to `fast-uri` 2.4.5, 3.1.6, or 4.1.3. Malformed IPv6 literals are now rejected with a host error instead of being normalized to a valid address.\n\n### Workarounds\n\nReject untrusted URLs whose host is a bracketed IPv6 literal before passing them to `fast-uri`, or route outbound requests against an explicit allowlist of addresses rather than trusting the normalized host.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-f65p-4m7j-42xc",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.4.5", "3.1.6", "4.1.3"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      },
+      "cwe": ["CWE-20", "CWE-918"],
+      "aliases": ["CVE-2026-75975"],
+      "url": "https://osv.dev/vulnerability/GHSA-f65p-4m7j-42xc",
+      "traces": [
+        ["react-scripts", "@pmmmwh/react-refresh-webpack-plugin", "schema-utils", "ajv", "fast-uri"]
+      ],
+      "isDirect": false
+    },
+    {
+      "packageName": "fast-uri",
+      "packageVersion": "3.1.2",
+      "summary": "fast-uri vulnerable to server-side request forgery via repeated hostname percent-decoding",
+      "details": "### Impact\n\n`fast-uri` decodes a hostname's percent escapes twice in a single `normalize()` or `resolve()` call: once during parsing and again during authority recomposition. A nested percent-encoded host therefore survives the first decode and is turned into a live destination by the second, so `normalize('http://%256c%256f%2563%2561%256c%2568%256f%2573%2574/')` returns `http://localhost/`. Applications that normalize or resolve an untrusted URI before an SSRF check, redirect validation, or host allowlist can be steered to a different destination, including internal addresses such as loopback or a cloud metadata endpoint, than the encoded input appeared to contain. This is an incomplete-fix variant of CVE-2026-6322, whose encoded-authority-delimiter fix introduced the second decode.\n\n### Patches\n\nFixed in `fast-uri` 2.4.5, 3.1.6, and 4.1.3.\n\n### Workarounds\n\nReject untrusted URIs whose host component contains an encoded percent sign (`%25`) before passing them to `normalize()` or `resolve()`.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-fph4-wmhf-6fwf",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.4.5", "3.1.6", "4.1.3"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      },
+      "cwe": ["CWE-174", "CWE-918"],
+      "aliases": ["CVE-2026-75899"],
+      "url": "https://osv.dev/vulnerability/GHSA-fph4-wmhf-6fwf",
+      "traces": [
+        ["react-scripts", "@pmmmwh/react-refresh-webpack-plugin", "schema-utils", "ajv", "fast-uri"]
+      ],
+      "isDirect": false
+    },
+    {
+      "packageName": "fast-uri",
+      "packageVersion": "3.1.2",
+      "summary": "fast-uri vulnerable to host confusion via percent-encoded scheme normalization",
+      "details": "### Impact\n\n`fast-uri` decodes percent-encoded characters in the scheme component with the legacy global `unescape()` and serializes the result back as raw characters, without re-escaping it or validating it as a scheme. A scheme that decodes to characters outside the RFC 3986 scheme grammar can therefore introduce structure the original input did not contain.\n\nFor example, `%2f%2fevil.example:/pwn` parses with no authority (`parse().host` is `undefined`), but `resolve()` and `normalize()` return `//evil.example:/pwn`, which reparses with host `evil.example`. The `%uXXXX` form (`%u002f%u002fevil.example:/pwn`) produces the same result, and a scheme containing `%0d%0a` reaches the output as a raw CR LF.\n\nApplications that normalize or resolve untrusted URLs before a redirect check, host allowlist, or outbound request decision, especially ones that treat a missing authority as same-origin, can be steered to an attacker-chosen authority, and a normalized URI placed in a response header can carry an injected CR LF.\n\n### Patches\n\nUpgrade to `fast-uri` >= 4.1.3, or >= 3.1.6 in the v3.x release line, or >= 2.4.5 in the v2.x release line.\n\n### Workarounds\n\nNone. Upgrade to the patched version.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-jqff-g426-hqxp",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.4.5", "3.1.6", "4.1.3"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+      },
+      "cwe": ["CWE-177"],
+      "aliases": ["CVE-2026-76172"],
+      "url": "https://osv.dev/vulnerability/GHSA-jqff-g426-hqxp",
+      "traces": [
+        ["react-scripts", "@pmmmwh/react-refresh-webpack-plugin", "schema-utils", "ajv", "fast-uri"]
+      ],
+      "isDirect": false
+    },
+    {
+      "packageName": "fast-uri",
+      "packageVersion": "3.1.2",
       "summary": "fast-uri vulnerable to host confusion via literal backslash authority delimiter",
       "details": "### Impact\n\n`fast-uri` v4.1.0 and earlier do not treat a literal backslash (U+005C) as an authority delimiter. Node's native WHATWG `URL` (used by `fetch()`, `undici`, and Node's `http`/`https` clients) normalizes `\\` to `/` for special schemes (`http`, `https`, `ws`, `wss`, `ftp`, `file`), so the two parsers extract different hosts from the same input string.\n\nFor example, `http://evil.com\\@allowed.com` is treated by `fast-uri` as host `allowed.com` with userinfo `evil.com\\`, while Node's WHATWG URL parser and `fetch()` see host `evil.com` with path `/@allowed.com`.\n\nApplications that use `fast-uri` to enforce host-based policy (allowlists, denylists, loopback/SSRF filtering, redirect validation, outbound proxy routing) before passing the same URL into Node's URL or `fetch()` consumers see a policy/use desync and can be steered to an unintended destination, including cloud metadata endpoints, loopback, or internal hosts.\n\n### Patches\n\nUpgrade to `fast-uri` v4.1.1, v3.1.4, or v2.4.3.\n\n### Workarounds\n\nNone. Upgrade to the patched version.",
       "category": "Injection & Dynamic Execution",
@@ -666,6 +952,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["2.4.3", "3.1.4", "4.1.1"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
@@ -681,6 +968,27 @@
     {
       "packageName": "js-yaml",
       "packageVersion": "3.14.2",
+      "summary": "js-yaml: maxTotalMergeKeys does not limit CPU use for empty merge sources",
+      "details": "## Summary\n\n`maxTotalMergeKeys` does not count empty mappings. An attacker can repeatedly merge a large sequence of them and consume significant CPU without reaching the configured limit.\n\n## Example\n\n```yaml\narr: &arr [{}, {}, {}, ...] # N empty mappings\ntargets:\n  - <<: *arr                # repeated K times\n```\n\nFor every target, the loader iterates all `N` elements of `arr`. This results in `O(N * K)` work while `totalMergeKeys` remains unchanged.\n\n## PoC\n\n```js\nimport { performance } from 'node:perf_hooks'\nimport { load, YAML11_SCHEMA } from 'js-yaml'\n\nconst n = 20000\n\nconst src =\n  'arr: &arr [' + '{},'.repeat(n).slice(0, -1) + ']\\n' +\n  'targets:\\n' +\n  '  - <<: *arr\\n'.repeat(n)\n\nconst started = performance.now()\n\nload(src, { schema: YAML11_SCHEMA })\n\nconsole.log(`${(performance.now() - started).toFixed(1)} ms`)\n```\n\nObserved results:\n\n| N | YAML size | Time |\n|---:|---:|---:|\n| 800 | ~13 KB | ~20 ms |\n| 3200 | ~50 KB | ~180 ms |\n| 20000 | ~500 KB | ~13 s |\n\n## Impact\n\nAn attacker can submit a relatively small YAML document that causes prolonged CPU consumption despite the default `maxTotalMergeKeys` limit.\n\n## Fix\n\nCount each merge-source mapping as one budget unit, in addition to counting its keys.\n\n## Difference with v5\n\nIn v3 & v4, merge is enabled by default. So, the severity score is higher.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-2883-xcg3-v3hh",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["4.3.2", "3.15.2"],
+      "cvss": {
+        "score": 7.5,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+      },
+      "cwe": ["CWE-400", "CWE-407"],
+      "aliases": ["CVE-2026-84375"],
+      "url": "https://osv.dev/vulnerability/GHSA-2883-xcg3-v3hh",
+      "traces": [["react-scripts", "@svgr/webpack", "@svgr/plugin-svgo", "svgo", "js-yaml"]],
+      "isDirect": false
+    },
+    {
+      "packageName": "js-yaml",
+      "packageVersion": "3.14.2",
       "summary": "js-yaml: YAML merge-key chains can force quadratic CPU consumption",
       "details": "### Impact\n\njs-yaml can spend quadratic CPU time parsing a document whose size grows only linearly. The issue is triggered by a chain of mappings where each mapping merges the previous one:\n\n```yaml\na0: &a0 { k0: 0 }\na1: &a1 { <<: *a0, k1: 1 }\na2: &a2 { <<: *a1, k2: 2 }\na3: &a3 { <<: *a2, k3: 3 }\n...\nb: *aN\n```\n\nFor each new mapping, the loader has to enumerate the keys inherited from the previous mapping. With N chained mappings, this results in roughly 1 + 2 + ... + N merged-key visits, i.e., O(N^2) work for O(N) input size.\n\n### PoC\n\nFrom N = 4000 delay become > 1s (doc size < 100K)\n\n```js\nimport { performance } from 'node:perf_hooks'\nimport { Buffer } from 'node:buffer'\nimport { load, YAML11_SCHEMA } from 'js-yaml'\n\nconst n = Number(process.argv[2] || 4000)\n\nfunction makeMergeChain (count) {\n  const lines = ['a0: &a0 { k0: 0 }']\n\n  for (let i = 1; i < count; i++) {\n    lines.push(`a${i}: &a${i} { <<: *a${i - 1}, k${i}: ${i} }`)\n  }\n\n  lines.push(`b: *a${count - 1}`)\n  return `${lines.join('\\n')}\\n`\n}\n\nconst source = makeMergeChain(n)\n\nconsole.log(source.split('\\n').slice(0, 8).join('\\n'))\nconsole.log('...')\nconsole.log(source.split('\\n').slice(-4).join('\\n'))\nconsole.log()\nconsole.log(`N: ${n}`)\nconsole.log(`YAML size: ${Buffer.byteLength(source)} bytes`)\n\nconst started = performance.now()\nconst result = load(source, { schema: YAML11_SCHEMA })\nconst elapsed = performance.now() - started\n\nconsole.log(`parse time: ${elapsed.toFixed(1)} ms`)\nconsole.log(`top-level keys: ${Object.keys(result).length}`)\nconsole.log(`b keys: ${Object.keys(result.b).length}`)\n```\n\n### Patches\n\nFix released. The most robust protection is to limit the total number of merged keys per parse call. This should close all past and future edge cases with merge. The default 10K-key limit should be okay in most cases.",
       "category": "Injection & Dynamic Execution",
@@ -688,6 +996,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.15.0", "4.3.0"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -708,6 +1017,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["4.3.1", "3.15.1"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -728,6 +1038,7 @@
       "severity": "MODERATE",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["4.2.0", "3.15.0"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
@@ -748,6 +1059,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["7.0.3"],
       "cvss": {
         "score": 8.1,
         "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H"
@@ -776,6 +1088,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["2.0.1"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -789,6 +1102,32 @@
       "isDirect": false
     },
     {
+      "packageName": "colord",
+      "packageVersion": "2.9.3",
+      "summary": "Colord: Slow rejection of oversized malformed color strings",
+      "details": "### Impact\n\n`colord`'s CSS color string matchers described a number as `([+-]?\\d*\\.?\\d+)`. In that form `\\d*` and `\\d+` can match the same digits, so a run of *n* digits can be divided between them in O(n²) ways, and rejecting an input retries every division. Parsing is synchronous and uninterruptible, so a long malformed color string blocks the thread:\n\n| input | time to reject |\n| --- | --- |\n| 16 KB | 224 ms |\n| 64 KB | 4.4 s |\n| 128 KB | 18.5 s |\n\nReachable through `colord()` and `getFormat()`, and through any method that accepts a color string — including `isEqual()`, `mix()` and `contrast()`. The affected matchers are `parseRgbaString` and `parseHslaString` (built in) and `parseHwbaString`, `parseLchaString`, `parseCmykaString` (plugins).\n\nGrowth is polynomial, not exponential — multi-kilobyte payloads are required for a noticeable stall.\n\n### Who is affected\n\nApplications that pass attacker-controlled strings of unbounded length to `colord()` — for example a server validating a color taken from a request body, JSON field, or uploaded stylesheet. `colord` applies no length limit before matching.\n\nTypical client-side use with short input is not meaningfully affected.\n\n### Patches\n\nFixed in **2.9.4**. The number is now written as `([+-]?(?:\\d*\\.\\d+|\\d+))`, which accepts exactly the same syntax but leaves only one way to match it, making rejection linear — 1 MB of input is rejected in ~5 ms.\n\n### Workarounds\n\nReject or truncate color strings longer than a sane limit (e.g. 100 characters) before passing them to `colord`.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-2wm5-q62r-hmrv",
+      "severity": "MODERATE",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.9.4"],
+      "cwe": ["CWE-1333"],
+      "aliases": ["CVE-2026-85062"],
+      "url": "https://osv.dev/vulnerability/GHSA-2wm5-q62r-hmrv",
+      "traces": [
+        [
+          "react-scripts",
+          "css-minimizer-webpack-plugin",
+          "cssnano",
+          "cssnano-preset-default",
+          "postcss-colormin",
+          "colord"
+        ]
+      ],
+      "isDirect": false
+    },
+    {
       "packageName": "svgo",
       "packageVersion": "2.8.2",
       "summary": "SVGO removeScripts plugin leaves some executable scripts intact",
@@ -798,6 +1137,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["2.8.3", "3.3.4", "4.0.2"],
       "cvss": {
         "score": 8.2,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N"
@@ -805,6 +1145,66 @@
       "cwe": ["CWE-184", "CWE-79"],
       "aliases": ["CVE-2026-73650"],
       "url": "https://osv.dev/vulnerability/GHSA-2p49-hgcm-8545",
+      "traces": [
+        [
+          "react-scripts",
+          "css-minimizer-webpack-plugin",
+          "cssnano",
+          "cssnano-preset-default",
+          "postcss-svgo",
+          "svgo"
+        ]
+      ],
+      "isDirect": false
+    },
+    {
+      "packageName": "svgo",
+      "packageVersion": "2.8.2",
+      "summary": "SVGO: removeScripts incompletely sanitizes executable HTML in SVG foreignObject elements",
+      "details": "## Summary\n\nSVGO's opt-in `removeScripts` plugin did not inspect executable HTML content inside SVG `<foreignObject>` elements. Applications that used this plugin as their only protection for untrusted SVG input could produce SVGs containing active HTML and expose users to cross-site scripting (XSS).\n\nSVGO is an optimizer rather than a comprehensive sanitization library, but `removeScripts` is maintained for consumers that already rely on it to remove common script execution paths.\n\n## Details\n\nAlthough the plugin removed SVG and XHTML `<script>` elements, it left other HTML execution paths inside `<foreignObject>` unchanged. These included:\n\n- event-handler attributes such as `onload` and `onbeforetoggle`;\n- `srcdoc` documents, including on `<iframe>` elements;\n- executable URLs in HTML attributes such as `action`, `data`, `formaction`, `href`, and `src`.\n\nAn attacker could place one of these payloads in an SVG. If an application optimized the untrusted SVG with `removeScripts` and then served the result in an active browser context, the payload could execute in the viewer's origin.\n\n## Impact\n\nSuccessful exploitation could allow script execution in the context where the optimized SVG is rendered. Depending on the embedding and origin configuration, this could expose cookies or local storage, modify content, or perform actions as the victim.\n\nThe plugin is opt-in, so consumers that do not enable `removeScripts` are not relying on the affected behavior. Typical local optimization of trusted SVG files is not affected.\n\n## Patches\n\nUpgrade to one of the following releases for the maintained release line in use:\n\n| Release line | Patched version | Plugin |\n| --- | --- | --- |\n| v2 | 2.8.4 | `removeScriptElement` |\n| v3 | 3.3.5 | `removeScriptElement` |\n| v4 | 4.1.0 | `removeScripts` |\n\nThe fix preserves visual HTML inside SVG `<foreignObject>` elements while removing event attributes, `srcdoc`, and executable URL values from active HTML URL attributes.\n\nSVGO v1 is no longer maintained. Users of v1 should upgrade to a supported release line.\n\n## Workarounds\n\nFor hostile input, use a dedicated SVG sanitization tool before passing the SVG to SVGO. As defense in depth, applications can reject or remove `<foreignObject>` content and avoid serving user-controlled SVGs in an active same-origin context.",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-4vpr-x523-8j87",
+      "severity": "MODERATE",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.8.4", "3.3.5", "4.1.0"],
+      "cvss": {
+        "score": 6.1,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+      },
+      "cwe": ["CWE-79"],
+      "aliases": ["CVE-2026-84369"],
+      "url": "https://osv.dev/vulnerability/GHSA-4vpr-x523-8j87",
+      "traces": [
+        [
+          "react-scripts",
+          "css-minimizer-webpack-plugin",
+          "cssnano",
+          "cssnano-preset-default",
+          "postcss-svgo",
+          "svgo"
+        ]
+      ],
+      "isDirect": false
+    },
+    {
+      "packageName": "svgo",
+      "packageVersion": "2.8.2",
+      "summary": "SVGO: removeScripts allows executable links through namespace and control-character bypasses",
+      "details": "## Summary\n\nSVGO's opt-in `removeScripts` plugin failed to remove some executable links. Namespace-prefixed SVG anchors and URL schemes containing ASCII tabs or newlines could bypass its checks. Applications that used this plugin as their only protection for untrusted SVG input could expose users to cross-site scripting (XSS).\n\nSVGO is an optimizer rather than a comprehensive sanitization library, but `removeScripts` is maintained for consumers that already rely on it to remove common script execution paths.\n\n## Details\n\nTwo related bypasses were present:\n\n1. The plugin inspected unprefixed SVG `<a>` elements but did not recognize namespace-prefixed SVG anchors such as `<svg:a>` when the prefix was bound to the SVG namespace. Their executable `href` or namespaced `*:href` values remained intact.\n2. The URL check did not account for ASCII tab, line-feed, or carriage-return characters embedded in a scheme. Browsers remove these characters before parsing the scheme, so values such as `java&#9;script:` could remain executable after bypassing the plugin's `javascript:` check.\n\nAnchors in unrelated custom namespaces are not executable SVG anchors and remain untouched.\n\n## Impact\n\nIf an application optimized attacker-controlled SVGs with `removeScripts` and then served the result in an active browser context, a victim could follow a link that executes script in the SVG's origin. Depending on the embedding and origin configuration, this could expose cookies or local storage, modify content, or perform actions as the victim.\n\nThe plugin is opt-in, so consumers that do not enable it are not relying on the affected behavior. Typical local optimization of trusted SVG files is not affected.\n\n## Patches\n\nUpgrade to one of the following releases for the maintained release line in use:\n\n| Release line | Patched version | Plugin |\n| --- | --- | --- |\n| v2 | 2.8.4 | `removeScriptElement` |\n| v3 | 3.3.5 | `removeScriptElement` |\n| v4 | 4.1.0 | `removeScripts` |\n\nThe fix makes SVG anchor handling namespace-aware and strips ASCII tabs, line feeds, and carriage returns before checking executable URL schemes.\n\nSVGO v1 is no longer maintained. Users of v1 should upgrade to a supported release line.\n\n## Workarounds\n\nFor hostile input, use a dedicated SVG sanitization tool before passing the SVG to SVGO. Applications can also reject links from untrusted SVG input and avoid serving user-controlled SVGs in an active same-origin context.\n\n## References\n\n- v4 fix: https://github.com/svg/svgo/pull/2268\n- related executable URL hardening: https://github.com/svg/svgo/pull/2263\n- v3 backport: https://github.com/svg/svgo/pull/2269\n- v2 backport: https://github.com/svg/svgo/pull/2272\n- v4.1.0 release: https://github.com/svg/svgo/releases/tag/v4.1.0\n- v3.3.5 release: https://github.com/svg/svgo/releases/tag/v3.3.5\n- v2.8.4 release: https://github.com/svg/svgo/releases/tag/v2.8.4",
+      "category": "Injection & Dynamic Execution",
+      "id": "GHSA-w27v-7q3p-w38r",
+      "severity": "HIGH",
+      "isoControl": "A.8.8 Management of technical vulnerabilities",
+      "fixAvailable": true,
+      "fixedVersions": ["2.8.4", "3.3.5", "4.1.0"],
+      "cvss": {
+        "score": 8.2,
+        "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N"
+      },
+      "cwe": ["CWE-184", "CWE-79"],
+      "aliases": ["CVE-2026-84370"],
+      "url": "https://osv.dev/vulnerability/GHSA-w27v-7q3p-w38r",
       "traces": [
         [
           "react-scripts",
@@ -827,6 +1227,7 @@
       "severity": "LOW",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["3.0.1", "2.0.1"],
       "cvss": {
         "score": 3.3,
         "vectorString": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L"
@@ -858,6 +1259,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.0.7", "1.1.16", "2.1.2"],
       "cvss": {
         "score": 5.3,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
@@ -890,6 +1292,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["5.0.8", "3.0.3", "2.1.3", "1.1.17"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
@@ -922,6 +1325,7 @@
       "severity": "HIGH",
       "isoControl": "A.8.8 Management of technical vulnerabilities",
       "fixAvailable": true,
+      "fixedVersions": ["1.1.18", "2.1.4", "3.0.6", "5.0.9"],
       "cvss": {
         "score": 7.5,
         "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"

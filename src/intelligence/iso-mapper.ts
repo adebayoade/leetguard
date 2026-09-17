@@ -1,12 +1,9 @@
-import { AntiPatternCategory } from '../types/index.js';
-
 export const ISOMap: Record<string, string> = {
   // Injection & Dynamic Execution — maps to A.8.28 Secure coding
   'eval() usage': 'A.8.28 Secure coding',
   'new Function()': 'A.8.28 Secure coding',
-  'unvalidated input passed to dynamic contexts': 'A.8.28 Secure coding',
 
-  // Data Exposure — maps to A.8.28 Secure coding and A.8.10 Information deletion
+  // Data Exposure — maps to A.8.28 Secure coding
   'hardcoded secrets and API keys': 'A.8.28 Secure coding',
   'sensitive data in console.log': 'A.8.28 Secure coding',
   'insecure AsyncStorage': 'A.8.28 Secure coding',
@@ -14,12 +11,10 @@ export const ISOMap: Record<string, string> = {
   // Transport & Communication — maps to A.8.28 Secure coding
   'missing HTTPS in hardcoded API URLs': 'A.8.28 Secure coding',
 
-  // React Native Mobile Risks — maps to A.8.28 Secure coding and A.8.29 Security testing
+  // React Native Mobile Risks — maps to A.8.29 Security testing
   'unvalidated WebView URIs': 'A.8.29 Security testing in development and acceptance',
-  'unvalidated deep link parameters': 'A.8.28 Secure coding',
-  'missing input validation on navigation props': 'A.8.28 Secure coding',
 
-  // Supply Chain — maps to A.5.22 Supplier monitoring and A.5.21 ICT supply chain
+  // Supply Chain — maps to A.5.22 Supplier monitoring
   'Abandoned Package': 'A.5.22 Monitoring, review and change management of supplier services',
 };
 
