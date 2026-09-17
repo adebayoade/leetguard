@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.3.3] - 2026-09-17
+
 ### Added
 
 - ESLint (flat config) wired up via `npm run lint`, alongside the existing `tsc --noEmit` check.
@@ -41,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Versions 1.0.0 through 1.3.0 predate this changelog and aren't individually documented here. Their release history is visible via git tags (`git tag -l`) and the [npm version history](https://www.npmjs.com/package/leetguard?activeTab=versions) if needed — happy to backfill entries for those from commit history if that's useful.
 
-[Unreleased]: https://github.com/adebayoade/leetguard/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/adebayoade/leetguard/compare/v1.3.3...HEAD
+[1.3.3]: https://github.com/adebayoade/leetguard/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/adebayoade/leetguard/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/adebayoade/leetguard/compare/v1.3.0...v1.3.1
